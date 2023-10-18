@@ -8,12 +8,19 @@ from collections import Counter
 
 
 def is_actor(name):
-    #Implement with MongoDB
-    return True
+    query = {"primaryName": name}
+    if config.actors.find_one(query) is not None:
+        return True
+    else:
+        return False
 
 def is_movie(name):
-    #Implement with MongoDB
-    return True
+    query = {"primaryTitle": name}
+    query2 = {"originalTitle": name}
+    if config.actors.find_one(query) is not None or config.actors.find_one(query2) is not None:
+        return True
+    else:
+        return False
 
 def could_win(winner,award):
     return winner in award.nominees 
@@ -53,7 +60,8 @@ for t in host_words:
             names.append(entity.text)
 counter = Counter(names)
 top = counter.most_common(20)
-two_name = [s for s in top if len(s[0].split()) ==2] # add actor check
+print(top)
+two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] # add actor check
 one_name = [s for s in top if len(s[0].split()) ==1]
 final_list = []
 for name2, count in two_name:
