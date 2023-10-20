@@ -41,36 +41,36 @@ class award():
         if could_win(winner):
             self.winner = winner
            
+def get_hosts():
+    spacy_model = spacy.load("en_core_web_sm")   
+    tweet_json_path = config.datapath
 
-spacy_model = spacy.load("en_core_web_sm")   
-tweet_json_path = config.datapath
-
-f = open(tweet_json_path)
-data = json.load(f)
-text = [d['text'] for d in data]
-host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
-names = []
-for t in host_words:
-    output = spacy_model(t)
-    
-    for entity in output.ents:
+    f = open(tweet_json_path)
+    data = json.load(f)
+    text = [d['text'] for d in data]
+    host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
+    names = []
+    for t in host_words:
+        output = spacy_model(t)
         
-        if entity.label_ == "PERSON":
+        for entity in output.ents:
             
-            names.append(entity.text)
-counter = Counter(names)
-top = counter.most_common(20)
-print(top)
-two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] # add actor check
-one_name = [s for s in top if len(s[0].split()) ==1]
-final_list = []
-for name2, count in two_name:
-    for name1, count1 in one_name:
-        if name1 in name2:
-            count+=count1
-    final_list.append((name2,count))
-print(final_list)
-final_list = sorted(final_list, key = lambda x: -x[1])
-print(final_list[:2])
+            if entity.label_ == "PERSON":
+                
+                names.append(entity.text)
+    counter = Counter(names)
+    top = counter.most_common(20)
+    
+    two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] # add actor check
+    one_name = [s for s in top if len(s[0].split()) ==1]
+    
+    for name2, count in two_name:
+        for name1, count1 in one_name:
+            if name1 in name2:
+                count+=count1
+        final_list.append((name2,count))
+    
+    final_list = sorted(final_list, key = lambda x: -x[1])
+    return final_list
 
     

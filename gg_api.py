@@ -1,9 +1,9 @@
 '''Version 0.4'''
-
+import frames
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
-    # Your code here
+    hosts = frames.get_hosts()
     return hosts
 
 def get_awards(year):
