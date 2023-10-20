@@ -40,17 +40,11 @@ class award():
     def set_winner(self, winner):
         if could_win(winner):
             self.winner = winner
-           
-def get_hosts():
-    spacy_model = spacy.load("en_core_web_sm")   
-    tweet_json_path = config.datapath
 
-    f = open(tweet_json_path)
-    data = json.load(f)
-    text = [d['text'] for d in data]
-    host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
+def get_people(examples):
+    spacy_model = spacy.load("en_core_web_sm")   
     names = []
-    for t in host_words:
+    for t in examples:
         output = spacy_model(t)
         
         for entity in output.ents:
@@ -61,7 +55,7 @@ def get_hosts():
     counter = Counter(names)
     top = counter.most_common(20)
     
-    two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] # add actor check
+    two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] #Checks for first names that match a first/last name pair. Hopefully no duplicates!
     one_name = [s for s in top if len(s[0].split()) ==1]
     
     for name2, count in two_name:
@@ -71,6 +65,32 @@ def get_hosts():
         final_list.append((name2,count))
     
     final_list = sorted(final_list, key = lambda x: -x[1])
-    return final_list
+    return 
 
+def load_json(): #Need to make more efficient, don't need to open every time
+    tweet_json_path = config.datapath
+    f = open(tweet_json_path)
+    return json.load(f)
+
+def get_hosts():
+    
+    data = load_json()
+    text = [d['text'] for d in data]
+    host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
+    
+    return get_people(host_words)[:config.num_hosts]
+
+def get_winners(awards_list): #takes in list of awards, could change later
+    winners_dict = {}
+    data = load_json()
+    for award in awards_list:
+        matches = [re.search(f'(.+?)wins.*?{re.escape(award)}', match, re.IGNORECASE).group(1) for match in data if re.search(f'(.+?)wins.*?{re.escape(award)}', match, re.IGNORECASE)]
+        winners = get_people(matches)
+        i=0
+        while(not could_win(winners[0])):
+            i+=1
+        winners_dict.append(award, winners[i])
+        
+
+        
     
