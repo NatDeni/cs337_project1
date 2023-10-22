@@ -38,7 +38,7 @@ def initial_preprocessing(data):
         
         text = unidecode(text)
         if len(text) <= 3: continue
-        #record['text'] = text.lower()
+        record['text'] = text
         data_preproc.append(record)
 
     # save the preprocessed data to a new JSON file
