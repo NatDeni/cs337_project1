@@ -1,17 +1,14 @@
 from unidecode import unidecode
 from langdetect import detect
+import langid
 from tqdm import tqdm
 import ftfy
 import re
 import json
 
-def isEnglish(s):
-    res = False
-    try:
-        res = (detect(s) == 'en')
-    except: 
-        res = False
-    return res
+def isEnglish(text):
+    lang, _ = langid.classify(text)
+    return lang == 'en'
     
 def initial_preprocessing(data):
     # define regular expressions to remove hashtags, emojis, links, and usernames
@@ -45,7 +42,7 @@ def initial_preprocessing(data):
         data_preproc.append(record)
 
     # save the preprocessed data to a new JSON file
-    with open('./data/gg2013_preprocessed_01.json', 'w') as f:
+    with open('./data/gg2013_preprocessed_02.json', 'w') as f:
         json.dump(data_preproc, f)
 
 
