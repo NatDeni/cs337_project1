@@ -8,8 +8,8 @@ class config:
     num_noms = 5         
     num_hosts = 2
     datapath = os.path.join(os.curdir, "data/gg2013.json")
-    preproc_datapath = os.path.join(os.curdir, "data/gg2013_preprocessed_01.json")
-    award_datapath = os.path.join(os.curdir, "data/categories_03.json")
+    preproc_datapath = os.path.join(os.curdir, "data/gg2013_preprocessed_03.json")
+    award_datapath = os.path.join(os.curdir, "data/categories.json")
     actors = db.actors
     movies = db.movies
 
