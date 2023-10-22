@@ -38,11 +38,11 @@ def initial_preprocessing(data):
         
         text = unidecode(text)
         if len(text) <= 3: continue
-        record['text'] = text.lower()
+        #record['text'] = text.lower()
         data_preproc.append(record)
 
     # save the preprocessed data to a new JSON file
-    with open('./data/gg2013_preprocessed_02.json', 'w') as f:
+    with open('./data/gg2013_preprocessed_03.json', 'w') as f:
         json.dump(data_preproc, f)
 
 
