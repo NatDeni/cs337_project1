@@ -50,14 +50,19 @@ def get_people(examples):
         for entity in output.ents:
             
             if entity.label_ == "PERSON":
+                split = entity.text.split()
+                while(len(split) > 2):
+                    names.append(split[0] + " " + split[1])
+                    split = split[2:]
+                names.append(" ".join(split))
                 
-                names.append(entity.text)
+    
     counter = Counter(names)
     top = counter.most_common(20)
-    
+    print(top)
     two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] #Checks for first names that match a first/last name pair. Hopefully no duplicates!
     one_name = [s for s in top if len(s[0].split()) ==1]
-    
+    final_list = []
     for name2, count in two_name:
         for name1, count1 in one_name:
             if name1 in name2:
@@ -65,10 +70,11 @@ def get_people(examples):
         final_list.append((name2,count))
     
     final_list = sorted(final_list, key = lambda x: -x[1])
-    return 
+    return final_list
 
 def load_json(): #Need to make more efficient, don't need to open every time
-    tweet_json_path = config.datapath
+    tweet_json_path = config.preproc_datapath
+
     f = open(tweet_json_path)
     return json.load(f)
 
@@ -91,6 +97,6 @@ def get_winners(awards_list): #takes in list of awards, could change later
             i+=1
         winners_dict.append(award, winners[i])
         
-
-        
+if __name__ == "__main__":
+    print(get_hosts())
     
