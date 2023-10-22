@@ -10,6 +10,7 @@ class config:
     datapath = os.path.join(os.curdir, "data/gg2013.json")
     preproc_datapath = os.path.join(os.curdir, "data/gg2013_preprocessed_01.json")
     award_datapath = os.path.join(os.curdir, "data/categories_03.json")
-    actors = db.actors    movies = db.movies
+    actors = db.actors
+    movies = db.movies
 
     
