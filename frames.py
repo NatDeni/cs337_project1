@@ -84,7 +84,7 @@ def get_hosts():
     text = [d['text'] for d in data]
     host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
     
-    return get_people(host_words)[:config.num_hosts]
+    return [p[0] for p in get_people(host_words)[:config.num_hosts]]
 
 def get_winners(awards_list): #takes in list of awards, could change later
     winners_dict = {}
