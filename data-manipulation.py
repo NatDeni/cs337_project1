@@ -34,8 +34,6 @@ def assign_genders(filename):
 
     # Use the apply method to conditionally assign genders
     df['gender'] = df['primaryProfession'].apply(lambda profession: 'male' if 'actor' in profession else ('female' if 'actress' in profession else 'unknown'))
-
-    # Save the modified DataFrame to a new CSV file
     df.to_csv('./database_data/filtered_actors.csv', index=False)
 
 def modify_movies_data(filename):
@@ -44,7 +42,6 @@ def modify_movies_data(filename):
 
     numeric_df = df[(df['endYear'].str.isnumeric())]
 
-    #drop rows where end year is before 2000
     filtered_df = numeric_df[numeric_df['endYear'].astype(int) < 2000]
     print("First filtering length: ", len(filtered_df))
 
@@ -53,7 +50,6 @@ def modify_movies_data(filename):
     print("Final length: ", len(final_df))
 
     final_df = final_df.drop(columns=['isAdult', 'runtimeMinutes'])
-    # print(final_df)
     final_df.to_csv('./database_data/filtered_movies.csv', index=False)
 
 def convert_to_json(csv_file, json_file):

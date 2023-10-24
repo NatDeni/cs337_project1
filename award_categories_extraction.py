@@ -20,23 +20,30 @@ def award_categories():
     #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>
     # """
 
-    # patterns = """
-    #     <JJS><NN><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN><CC><JJ> | \
+    #     patterns = """
+    #     <JJS><NN><NN>{2} | <JJS><JJ><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN><CC><JJ> | \
     #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN>{2} | \
     #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NNS><CC><NN>{2}<VBN><IN><NN> | \
     #     <JJS><NN>{2}<NN><CC><JJ> | <RBS><NNS><CC><NN>{2}<VBN><IN><NN> | \
     #     <JJS><JJ><NN><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN> | \
     #     <NN>{2}<VBZ><NN> | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><NNS><CC><NN>{2}<VBN><IN><NN>
+    #     <RBS><NN><IN><DT><NN><IN><DT><NNS><CC><NN>{2}<VBN><IN><NN> |  <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>
     # """
 
-    patterns = """<JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1}"""
+    # patterns = """
+    #     <JJS><NN><NN>{2} \
 
-    chunk_pattern_list = [RegexpParser('P: {'+pattern.strip()+'}') for pattern in patterns.split('|')]
+       
+    # """
+
+    patterns = """ P: {<RBS><NN><IN><DT><NN><IN><DT><JJ><NN> \
+    | <JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS><NN>{2}<NN><CC><JJ> | <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1} | <JJS><JJ><NN>{2} | <JJS><NN><NN>{2} | <RBS><NNS><CC><NN>{2}<VBN><IN><NN> | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN> | <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NNS><CC><NN>{2}<VBN><IN><NN>}"""
+
+    # chunk_pattern_list = [RegexpParser('P: {'+pattern.strip()+'}') for pattern in patterns.split('|')]
     
-    # chunk_pattern_list = [RegexpParser(patterns)]
+    chunk_pattern_list = [RegexpParser(patterns)]
     categories = []
-    award_verbs = ['won', 'wins', 'got', 'goes to']
+    award_verbs = ['won', 'wins', 'got', 'goes to', 'receives', 'accepts', 'accepted', 'received']
 
     for sentence in data:
         has_verb = False 
@@ -80,15 +87,16 @@ def award_categories():
 
     cou = Counter(categories_no_people)
     top26 = cou.most_common(26)
+    top30 = cou.most_common(30)
     top50 = cou.most_common(50)
 
-    print(top50)
+    print(top30)
 
     combinations = []
     larger_categories = []
     combinations_dict = defaultdict(list)
 
-    for category in top50:
+    for category in top30:
         if ' or ' in category[0]:
             larger_categories.append(category[0])
             combinations.append(category[0])
@@ -97,7 +105,11 @@ def award_categories():
             continue
 
     for i in range(len(larger_categories)):
-        first_part, second_part = larger_categories[i].split('or')
+
+        print('-----------------------------------------------------------------------')
+
+        print(larger_categories[i])
+        first_part, second_part = larger_categories[i].split(' or')
 
         first_part = first_part.strip()
         second_part = second_part.strip()
@@ -179,26 +191,35 @@ def award_categories():
     no_substring = [(string, num) for tuples in groups.values() for string, num in tuples]
 
     no_substring = sorted(no_substring, key=lambda x: x[1], reverse=True)
-    print(no_substring[:26])
 
-    # with open('tmp5.txt', 'w') as f:
-    #     for c in top50:
-    #         f.write(str(c) + '\n')
+    #if any of the top 50 elements in the first part contain the word 'tv' replace it with 'television'
+    for i in range(len(no_substring)):
+        if 'tv' in no_substring[i][0]:
+            no_substring[i] = (no_substring[i][0].replace('tv', 'television'), no_substring[i][1])
 
-    # print(top26)
-    # with open('tmp4.txt', 'w') as f:
-    #     for c in top26:
-    #         f.write(str(c) + '\n')
-    #     f.write('-' * 20 + '\n')
-    #     for c in top50:
-    #         f.write(str(c) + '\n')
+    # in no_substring keep only those elements whose first part contains more than 4 words
+    # no_substring = [x for x in no_substring if len(x[0].split()) > 4]
+    # print(no_substring)
 
-    # with open('./data/categories.json', 'w') as f:
-    #     json.dump({'top26': {c[0]: c[1] for c in top26},
-    #             'top50': {c[0]: c[1] for c in top50}}, f)
+    # with open('./data/categories.txt', 'w') as f:
+    #     for c in no_substring:
+    #         f.write(str(c[0]) + '\n')
+
+    # # with open('tmp4.txt', 'w') as f:
+    # #     for c in no_substring:
+    # #         f.write(str(c) + '\n')
+
+    # with open('./data/categories_check.json', 'w') as f:
+    #     json.dump({{c[0] for c in no_substring}}, f)
+
+    only_categories = []
+    for c in no_substring:
+        only_categories.append(c[0])
+
+    return only_categories
 
 def get_human_named_awards():
-    with open ('./data/gg2013_preprocessed_special.json') as f:
+    with open (config.preproc_special_datapath) as f:
         data = json.load(f)
 
     award_sentences = []
