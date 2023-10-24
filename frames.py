@@ -5,6 +5,7 @@ import spacy
 from ftfy import fix_text
 import re 
 from collections import Counter
+import statistics
 
 
 def is_actor(name):
@@ -58,8 +59,7 @@ def get_people(examples):
                 
     
     counter = Counter(names)
-    top = counter.most_common(20)
-    print(top)
+    top = counter.most_common(50)
     two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] #Checks for first names that match a first/last name pair. Hopefully no duplicates!
     one_name = [s for s in top if len(s[0].split()) ==1]
     final_list = []
@@ -86,17 +86,27 @@ def get_hosts():
     
     return [p[0] for p in get_people(host_words)[:config.num_hosts]]
 
-def get_winners(awards_list): #takes in list of awards, could change later
-    winners_dict = {}
+def get_presenter():
+    answers_path = os.path.join(os.curdir, "data/gg2013answers.json")
     data = load_json()
-    for award in awards_list:
-        matches = [re.search(f'(.+?)wins.*?{re.escape(award)}', match, re.IGNORECASE).group(1) for match in data if re.search(f'(.+?)wins.*?{re.escape(award)}', match, re.IGNORECASE)]
-        winners = get_people(matches)
-        i=0
-        while(not could_win(winners[0])):
-            i+=1
-        winners_dict.append(award, winners[i])
-        
+    data = [(d['text'], int(str(d['timestamp_ms'])[:-5])) for d in data]
+    f = open(answers_path)
+    answers = json.load(f)
+    info = []
+    for award in answers['award_data']:
+        info.append((answers['award_data'][award]['winner'], award))
+    for winner, award in info:
+        pattern = re.compile(re.escape(winner), re.IGNORECASE)
+        time_data = [t[1] for t in data if re.search(pattern, t[0])]
+        winner_mode = statistics.mode(time_data)
+        pattern = re.compile('joke', re.IGNORECASE)
+        r_data = [t[0] for t in data if winner_mode - t[1] <5 and winner_mode - t[1] > 0 and re.search(pattern, t[0])]
+        people = get_people(r_data)
+        print(people)
+        people = [p for p in people if not re.search(pattern,p[0])]
+        print(f'Winner: {winner}, Award: {award}, potential hosts: {[p[0] for p in people[:5]]}')
+
+
 if __name__ == "__main__":
-    print(get_hosts())
+    print(get_presenter())
     
