@@ -1,4 +1,5 @@
 import json
+from config import config
 
 important_words = [['best'], ['cecil'], ['foreign']]
 person_word = [['actor'], ['actress'], ['director']]
@@ -36,3 +37,13 @@ def is_award_in_tweet(tweet, award_words, person_award):
         if not tmp:
             return False
     return True
+
+def import_awards_from_answers():
+    f = open(config.answers)
+    data = json.load(f)
+    f.close()
+
+    awards = []
+    for award in data['award_data']:
+        awards.append(award)
+    return awards

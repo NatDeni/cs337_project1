@@ -118,8 +118,12 @@ def combine_counters(counter):
     return new_counter
 
 
-def get_entites(year, verbose=True, important_verbs=[''], category='NOMINEES'):
-    movie_titles = get_all_movies_from_db(year)
+def get_entites(awards_list, year, verbose=True, category='NOMINEES'):
+    if category == 'NOMINEES':
+        important_verbs = nominees_verbs
+    if category == 'WINNERS':
+        important_verbs = winner_verbs
+    # movie_titles = get_all_movies_from_db(year)
     if verbose: print("Extracted movie titles")
     
     f = open(config.preproc_special_datapath)
@@ -133,17 +137,17 @@ def get_entites(year, verbose=True, important_verbs=[''], category='NOMINEES'):
     # if verbose: print("Extracted twitter data")
 
     # f = open(config.award_datapath)
-    f = open('./tmp.json')
-    awards_data = json.load(f)
-    f.close()
-    if verbose: print("Extracted awards data")
+    # f = open('./tmp.json')
+    # awards_data = json.load(f)
+    # f.close()
+    # if verbose: print("Extracted awards data")
 
     non_person = 0
     
     awards = []
     awards_words = []
     person_award = {}
-    for award in awards_data['top26']:
+    for award in awards_list:
         p_a = False
         for word in person_award_words:
             if word in award.lower(): p_a = True
@@ -247,13 +251,25 @@ def get_entites(year, verbose=True, important_verbs=[''], category='NOMINEES'):
             nominees[t] = nominees[t][:5]
         if category == 'WINNERS':
             nominees[t] = nominees[t][:1]
-        print('\n', t, '\n', nominees[t], '\n')
-        print('-' * 20)
-    if verbose: print("Updated nominees with closest match")
-    print(non_person)
+        nominees[t] = [n[0] for n in nominees[t]]
+        if verbose:
+            print('\n', t, '\n', nominees[t], '\n')
+            print('-' * 20)
+    if verbose: 
+        print("Updated nominees with closest match")
+        print("Tweets matched", non_person)
+    return nominees
 
 
 if __name__ == '__main__':
-    # nomin = get_entites(2013, True, nominees_verbs, 'NOMINEES')
-    winners = get_entites(2013, True, nominees_verbs, 'WINNERS')
+    f = open(config.award_datapath)
+    f = open('./tmp.json')
+    awards_data = json.load(f)
+    f.close()
+
+    awards_list = []
+    for award in awards_data['top26']:
+        awards_list.append(award)
+    # nomin = get_entites(awards_list, 2013, True, 'NOMINEES')
+    winners = get_entites(awards_list, 2013, True, 'WINNERS')
     # get_entites(2013, True, presenters_verbs)

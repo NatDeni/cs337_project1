@@ -1,0 +1,278 @@
+{
+  "Hosts": [
+    "Amy Poehler",
+    "Tina Fey"
+  ],
+  "Awards": [
+    "best motion picture drama",
+    "best motion picture musical or comedy",
+    "best television series drama",
+    "best actress in a motion picture drama",
+    "best actress motion picture",
+    "best actor in a motion picture drama",
+    "best original song motion picture",
+    "best motion picture screenplay",
+    "best actress in a television series drama",
+    "best actor in a motion picture comedy",
+    "best television series comedy",
+    "best actress in a motion picture comedy",
+    "best director motion picture",
+    "best actor television series",
+    "best actor in a television series comedy",
+    "best foreign language film",
+    "best actress drama winner",
+    "best actress television drama",
+    "best actress in a television series comedy",
+    "best television series drama",
+    "best actress television series",
+    "best animated feature film award",
+    "best actor in a television series drama",
+    "best original song skyfall",
+    "best original score motion picture",
+    "best actor television comedy",
+    "best drama television actress",
+    "best television series musical",
+    "best actor drama award",
+    "best actor in a television series comedy",
+    "best actress in a television series drama",
+    "best mini series or television",
+    "best original screenplay quentin",
+    "best television series comedy",
+    "best real fraud president",
+    "best actress in a television comedy musical",
+    "best actress television series drama",
+    "best performance by an actress in a motion picture drama",
+    "best television drama actor",
+    "best actor in a television drama award",
+    "best actor for a television series drama",
+    "best red carpet look contest",
+    "best performance by an actor in a supporting role",
+    "best miniseries or motion picture made for television"
+  ],
+  "best screenplay - motion picture": {
+    "Nominees": [
+      "Django"
+    ],
+    "Winner": [
+      "Django"
+    ],
+    "Presenters": []
+  },
+  "best director - motion picture": {
+    "Nominees": [
+      "ben affleck"
+    ],
+    "Winner": [
+      "ben affleck"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a television series - comedy or musical": {
+    "Nominees": [
+      "lena dunham"
+    ],
+    "Winner": [
+      "lena dunham"
+    ],
+    "Presenters": []
+  },
+  "best foreign language film": {
+    "Nominees": [
+      "Amour"
+    ],
+    "Winner": [
+      "Amour"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a supporting role in a motion picture": {
+    "Nominees": [
+      "christoph waltz"
+    ],
+    "Winner": [
+      "christoph waltz"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": {
+    "Nominees": [
+      "maggie smith"
+    ],
+    "Winner": [
+      "maggie smith"
+    ],
+    "Presenters": []
+  },
+  "best motion picture - comedy or musical": {
+    "Nominees": [
+      "Les Mis"
+    ],
+    "Winner": [
+      "Les Mis"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a motion picture - comedy or musical": {
+    "Nominees": [
+      "jennifer lawrence"
+    ],
+    "Winner": [
+      "jennifer lawrence"
+    ],
+    "Presenters": []
+  },
+  "best mini-series or motion picture made for television": {
+    "Nominees": [],
+    "Winner": [],
+    "Presenters": []
+  },
+  "best original score - motion picture": {
+    "Nominees": [
+      "Life Of Pie"
+    ],
+    "Winner": [
+      "Life Of Pie"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a television series - drama": {
+    "Nominees": [
+      "claire danes"
+    ],
+    "Winner": [
+      "claire danes"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a motion picture - drama": {
+    "Nominees": [
+      "jessica chastain"
+    ],
+    "Winner": [
+      "jessica chastain"
+    ],
+    "Presenters": []
+  },
+  "cecil b. demille award": {
+    "Nominees": [
+      "Cecil"
+    ],
+    "Winner": [
+      "Cecil"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a motion picture - comedy or musical": {
+    "Nominees": [
+      "sweet"
+    ],
+    "Winner": [
+      "sweet"
+    ],
+    "Presenters": []
+  },
+  "best motion picture - drama": {
+    "Nominees": [
+      "Argo"
+    ],
+    "Winner": [
+      "Argo"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": {
+    "Nominees": [],
+    "Winner": [],
+    "Presenters": []
+  },
+  "best performance by an actress in a supporting role in a motion picture": {
+    "Nominees": [
+      "anne hathaway"
+    ],
+    "Winner": [
+      "anne hathaway"
+    ],
+    "Presenters": []
+  },
+  "best television series - drama": {
+    "Nominees": [
+      "Homeland"
+    ],
+    "Winner": [
+      "Homeland"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a mini-series or motion picture made for television": {
+    "Nominees": [
+      "kevin"
+    ],
+    "Winner": [
+      "kevin"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actress in a mini-series or motion picture made for television": {
+    "Nominees": [
+      "julianne moore"
+    ],
+    "Winner": [
+      "julianne moore"
+    ],
+    "Presenters": []
+  },
+  "best animated feature film": {
+    "Nominees": [
+      "Brave"
+    ],
+    "Winner": [
+      "Brave"
+    ],
+    "Presenters": []
+  },
+  "best original song - motion picture": {
+    "Nominees": [
+      "Skyfall"
+    ],
+    "Winner": [
+      "Skyfall"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a motion picture - drama": {
+    "Nominees": [
+      "daniel day"
+    ],
+    "Winner": [
+      "daniel day"
+    ],
+    "Presenters": []
+  },
+  "best television series - comedy or musical": {
+    "Nominees": [
+      "Girls"
+    ],
+    "Winner": [
+      "Girls"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a television series - drama": {
+    "Nominees": [
+      "damien lewis"
+    ],
+    "Winner": [
+      "damien lewis"
+    ],
+    "Presenters": []
+  },
+  "best performance by an actor in a television series - comedy or musical": {
+    "Nominees": [
+      "don cheadle"
+    ],
+    "Winner": [
+      "don cheadle"
+    ],
+    "Presenters": []
+  }
+}
