@@ -10,14 +10,14 @@ spacy_model = spacy.load("en_core_web_sm")
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
-def intial_categories(): 
+def award_categories(): 
     with open (config.preproc_datapath) as f:
         data = json.load(f)
 
     # patterns = """
-    #     P: {<JJS><NN><:><NN>{2} | \
-    #     <JJS><JJ><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<:><NN><CC><JJ> | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>}
+    #     <JJS><NN><NN>{2} | \
+    #     <JJS><JJ><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN><CC><JJ> | \
+    #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>
     # """
 
     # patterns = """
@@ -30,11 +30,11 @@ def intial_categories():
     #     <RBS><NN><IN><DT><NN><IN><DT><NNS><CC><NN>{2}<VBN><IN><NN>
     # """
 
-    patterns = """P: {<JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1}}"""
+    patterns = """<JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1}"""
 
-    # chunk_pattern_list = [RegexpParser('P: {'+pattern.strip()+'}') for pattern in patterns.split('|')]
+    chunk_pattern_list = [RegexpParser('P: {'+pattern.strip()+'}') for pattern in patterns.split('|')]
     
-    chunk_pattern_list = [RegexpParser(patterns)]
+    # chunk_pattern_list = [RegexpParser(patterns)]
     categories = []
     award_verbs = ['won', 'wins', 'got', 'goes to']
 
@@ -82,6 +82,8 @@ def intial_categories():
     top26 = cou.most_common(26)
     top50 = cou.most_common(50)
 
+    print(top50)
+
     combinations = []
     larger_categories = []
     combinations_dict = defaultdict(list)
@@ -96,7 +98,6 @@ def intial_categories():
 
     for i in range(len(larger_categories)):
         first_part, second_part = larger_categories[i].split('or')
-        # print(first_part, "-", second_part)
 
         first_part = first_part.strip()
         second_part = second_part.strip()
@@ -111,9 +112,6 @@ def intial_categories():
         if larger_categories[i] in combinations_dict.keys():
             combinations_dict[larger_categories[i]] += ', ' + second_combination 
 
-    # print(top50)
-
-    # print("------------------------------------------------------------")
     is_it_substring = False
     no_substring = []
     for category in top50:
@@ -134,22 +132,54 @@ def intial_categories():
         if not is_it_substring:
             no_substring.append(category)
 
+    print(no_substring)
+
+    for i, string in enumerate(no_substring):
+        if string[0] in combinations_dict.keys():
+            # print(string[0])
+            continue
+            
+        for key, value in combinations_dict.items():
+            exists = value.find(string[0])
+            if exists != -1:
+                lst_string = list(string)
+                lst_string[0] = key
+                no_substring[i] = tuple(lst_string)
+                # print(no_substring[i])
+                break
+    # print(no_substring)
+  
+    unique_strings = {}
+    for string, num in no_substring:
+        if string in unique_strings:
+            unique_strings[string] += num
+        else:
+            unique_strings[string] = num
+
+    no_substring = [(string, num) for string, num in unique_strings.items()]
     # print(no_substring)
 
-    final = []
-    values = combinations_dict.values()
-    sum = 0
-    for element in no_substring:
-        for key, values in combinations_dict.items():
-            exists = values.find(element[0])
-            if exists !=-1:
-                print(element[0])
+# Group tuples by number of words in first part
+    groups = defaultdict(list)
+    for string, num in no_substring:
+        num_words = len(string.split())
+        groups[num_words].append((string, num))
 
+    # Remove duplicates within each group
+    for num_words, tuples in groups.items():
+        for i, (string1, num1) in enumerate(tuples):
+            for j in range(i+1, len(tuples)):
+                string2, num2 = tuples[j]
+                if set(string1.split()) <= set(string2.split()):
+                    tuples[i] = (string1, num1+num2)
+                    tuples.pop(j)
+                    break
 
-    #     if element[0] in combinations_dict.keys():
-    #     for values in combinations_dict.values():
-    #         print
-    #         print(element[0])
+    # Flatten groups back into a list of tuples
+    no_substring = [(string, num) for tuples in groups.values() for string, num in tuples]
+
+    no_substring = sorted(no_substring, key=lambda x: x[1], reverse=True)
+    print(no_substring[:26])
 
     # with open('tmp5.txt', 'w') as f:
     #     for c in top50:
@@ -194,5 +224,5 @@ def get_human_named_awards():
 
 
 if __name__ == '__main__':
-    # intial_categories()
-    get_human_named_awards()
+    award_categories()
+    # get_human_named_awards()
