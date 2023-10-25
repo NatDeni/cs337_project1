@@ -3,27 +3,27 @@ Hosts: Amy Poehler, Tina Fey
 Our Awards: best motion picture drama; best motion picture musical or comedy; best television series drama; best actress in a motion picture drama; best actress motion picture; best actor in a motion picture drama; best original song motion picture; best motion picture screenplay; best actress in a television series drama; best actor in a motion picture comedy; best television series comedy; best actress in a motion picture comedy; best director motion picture; best actor television series; best actor in a television series comedy; best foreign language film; best actress drama winner; best actress television drama; best actress in a television series comedy; best television series drama; best actress television series; best animated feature film award; best actor in a television series drama; best original song skyfall; best original score motion picture; best actor television comedy; best drama television actress; best television series musical; best actor drama award; best actor in a television series comedy; best actress in a television series drama; best mini series or television; best original screenplay quentin; best television series comedy; best real fraud president; best actress in a television comedy musical; best actress television series drama; best performance by an actress in a motion picture drama; best television drama actor; best actor in a television drama award; best actor for a television series drama; best red carpet look contest; best performance by an actor in a supporting role; best miniseries or motion picture made for television
 
 Award: best screenplay - motion picture
-Nominees: Django
+Nominees: Django, Fuck Yeah
 Winner: Django
 Presenters: 
 
 Award: best director - motion picture
-Nominees: ben affleck
+Nominees: ben affleck, ang lee, brenda chapman, matt damon, quentin tarantino
 Winner: ben affleck
 Presenters: 
 
 Award: best performance by an actress in a television series - comedy or musical
-Nominees: lena dunham
+Nominees: lena dunham, amy poehler
 Winner: lena dunham
 Presenters: 
 
 Award: best foreign language film
-Nominees: Amour
+Nominees: Amour, Schwarzenegger, Stallone, Michael Heneke, Oscar
 Winner: Amour
 Presenters: 
 
 Award: best performance by an actor in a supporting role in a motion picture
-Nominees: christoph waltz
+Nominees: christoph waltz, bradley cooper
 Winner: christoph waltz
 Presenters: 
 
@@ -33,7 +33,7 @@ Winner: maggie smith
 Presenters: 
 
 Award: best motion picture - comedy or musical
-Nominees: Les Mis
+Nominees: Les Mis, Hearts Fullof Love, Anne Hathaway, Cheers, Well Deserved
 Winner: Les Mis
 Presenters: 
 
@@ -44,3 +44,91 @@ Presenters:
 
 Award: best mini-series or motion picture made for television
 Nominees: 
+Winner: 
+Presenters: 
+
+Award: best original score - motion picture
+Nominees: Getthe Look, Lifeof Pi, Life Of Pie, Michael Dane, Mychael Danna
+Winner: Life Of Pie
+Presenters: 
+
+Award: best performance by an actress in a television series - drama
+Nominees: claire danes, abbey, lea michele
+Winner: claire danes
+Presenters: 
+
+Award: best performance by an actress in a motion picture - drama
+Nominees: jessica chastain, anne hathaway
+Winner: jessica chastain
+Presenters: 
+
+Award: cecil b. demille award
+Nominees: Cecil, Jodie Foster, De Mille, Came Out, Cecile
+Winner: Cecil
+Presenters: 
+
+Award: best performance by an actor in a motion picture - comedy or musical
+Nominees: ada, sweet
+Winner: sweet
+Presenters: 
+
+Award: best motion picture - drama
+Nominees: Argo, Lincoln, Julia Roberts, Oscars, Amazing
+Winner: Argo
+Presenters: 
+
+Award: best performance by an actor in a supporting role in a series, mini-series or motion picture made for television
+Nominees: 
+Winner: 
+Presenters: 
+
+Award: best performance by an actress in a supporting role in a motion picture
+Nominees: anne hathaway, maggie smith
+Winner: anne hathaway
+Presenters: 
+
+Award: best television series - drama
+Nominees: Homeland, Belarich, Claire, Diego Klattenhoff, Fuck Yeah
+Winner: Homeland
+Presenters: 
+
+Award: best performance by an actor in a mini-series or motion picture made for television
+Nominees: kevin
+Winner: kevin
+Presenters: 
+
+Award: best performance by an actress in a mini-series or motion picture made for television
+Nominees: julianne moore, maggie smith, nicole kidman
+Winner: julianne moore
+Presenters: 
+
+Award: best animated feature film
+Nominees: Brave, Disney, Wreck It Ralph, Pixar
+Winner: Brave
+Presenters: 
+
+Award: best original song - motion picture
+Nominees: Skyfall, Adele, Actof Valors, Bond James Bond, Django
+Winner: Skyfall
+Presenters: 
+
+Award: best performance by an actor in a motion picture - drama
+Nominees: daniel day
+Winner: daniel day
+Presenters: 
+
+Award: best television series - comedy or musical
+Nominees: Girls, Cheers, Team Marnie, Demand, News
+Winner: Girls
+Presenters: 
+
+Award: best performance by an actor in a television series - drama
+Nominees: damian lewis, jeff daniels, hugh laurie, steve
+Winner: damien lewis
+Presenters: 
+
+Award: best performance by an actor in a television series - comedy or musical
+Nominees: don cheadle, eric stonestreet
+Winner: don cheadle
+Presenters: 
+

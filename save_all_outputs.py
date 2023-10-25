@@ -36,8 +36,10 @@ def collect_data(year, verbose=False):
         f.write('Our Awards: '+ '; '.join(json_dict['Awards']) + '\n\n')
         for award in answer_award_list:
             f.write('Award: '+ str(award)+ '\n')
-            f.write('Nominees: '+ ', '.join(nominees[award])+ '\n')
-            f.write('Winner: '+ winners[award]+ '\n')
+            if len(nominees[award]) < 1: f.write('Nominees: \n')
+            else: f.write('Nominees: '+ ', '.join(nominees[award])+ '\n')
+            if len(winners[award]) < 1: f.write('Winner: \n')
+            else: f.write('Winner: '+ winners[award][0]+ '\n')
             f.write('Presenters: '+ ''+ '\n')
             f.write('\n')
         # json.dump(json_dict)

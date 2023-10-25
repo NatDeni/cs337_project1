@@ -51,7 +51,8 @@
   ],
   "best screenplay - motion picture": {
     "Nominees": [
-      "Django"
+      "Django",
+      "Fuck Yeah"
     ],
     "Winner": [
       "Django"
@@ -60,7 +61,11 @@
   },
   "best director - motion picture": {
     "Nominees": [
-      "ben affleck"
+      "ben affleck",
+      "ang lee",
+      "brenda chapman",
+      "matt damon",
+      "quentin tarantino"
     ],
     "Winner": [
       "ben affleck"
@@ -69,7 +74,8 @@
   },
   "best performance by an actress in a television series - comedy or musical": {
     "Nominees": [
-      "lena dunham"
+      "lena dunham",
+      "amy poehler"
     ],
     "Winner": [
       "lena dunham"
@@ -78,7 +84,11 @@
   },
   "best foreign language film": {
     "Nominees": [
-      "Amour"
+      "Amour",
+      "Schwarzenegger",
+      "Stallone",
+      "Michael Heneke",
+      "Oscar"
     ],
     "Winner": [
       "Amour"
@@ -87,7 +97,8 @@
   },
   "best performance by an actor in a supporting role in a motion picture": {
     "Nominees": [
-      "christoph waltz"
+      "christoph waltz",
+      "bradley cooper"
     ],
     "Winner": [
       "christoph waltz"
@@ -105,7 +116,11 @@
   },
   "best motion picture - comedy or musical": {
     "Nominees": [
-      "Les Mis"
+      "Les Mis",
+      "Hearts Fullof Love",
+      "Anne Hathaway",
+      "Cheers",
+      "Well Deserved"
     ],
     "Winner": [
       "Les Mis"
@@ -128,7 +143,11 @@
   },
   "best original score - motion picture": {
     "Nominees": [
-      "Life Of Pie"
+      "Getthe Look",
+      "Lifeof Pi",
+      "Life Of Pie",
+      "Michael Dane",
+      "Mychael Danna"
     ],
     "Winner": [
       "Life Of Pie"
@@ -137,7 +156,9 @@
   },
   "best performance by an actress in a television series - drama": {
     "Nominees": [
-      "claire danes"
+      "claire danes",
+      "abbey",
+      "lea michele"
     ],
     "Winner": [
       "claire danes"
@@ -146,7 +167,8 @@
   },
   "best performance by an actress in a motion picture - drama": {
     "Nominees": [
-      "jessica chastain"
+      "jessica chastain",
+      "anne hathaway"
     ],
     "Winner": [
       "jessica chastain"
@@ -155,7 +177,11 @@
   },
   "cecil b. demille award": {
     "Nominees": [
-      "Cecil"
+      "Cecil",
+      "Jodie Foster",
+      "De Mille",
+      "Came Out",
+      "Cecile"
     ],
     "Winner": [
       "Cecil"
@@ -164,6 +190,7 @@
   },
   "best performance by an actor in a motion picture - comedy or musical": {
     "Nominees": [
+      "ada",
       "sweet"
     ],
     "Winner": [
@@ -173,7 +200,11 @@
   },
   "best motion picture - drama": {
     "Nominees": [
-      "Argo"
+      "Argo",
+      "Lincoln",
+      "Julia Roberts",
+      "Oscars",
+      "Amazing"
     ],
     "Winner": [
       "Argo"
@@ -187,7 +218,8 @@
   },
   "best performance by an actress in a supporting role in a motion picture": {
     "Nominees": [
-      "anne hathaway"
+      "anne hathaway",
+      "maggie smith"
     ],
     "Winner": [
       "anne hathaway"
@@ -196,7 +228,11 @@
   },
   "best television series - drama": {
     "Nominees": [
-      "Homeland"
+      "Homeland",
+      "Belarich",
+      "Claire",
+      "Diego Klattenhoff",
+      "Fuck Yeah"
     ],
     "Winner": [
       "Homeland"
@@ -214,7 +250,9 @@
   },
   "best performance by an actress in a mini-series or motion picture made for television": {
     "Nominees": [
-      "julianne moore"
+      "julianne moore",
+      "maggie smith",
+      "nicole kidman"
     ],
     "Winner": [
       "julianne moore"
@@ -223,7 +261,10 @@
   },
   "best animated feature film": {
     "Nominees": [
-      "Brave"
+      "Brave",
+      "Disney",
+      "Wreck It Ralph",
+      "Pixar"
     ],
     "Winner": [
       "Brave"
@@ -232,7 +273,11 @@
   },
   "best original song - motion picture": {
     "Nominees": [
-      "Skyfall"
+      "Skyfall",
+      "Adele",
+      "Actof Valors",
+      "Bond James Bond",
+      "Django"
     ],
     "Winner": [
       "Skyfall"
@@ -250,7 +295,11 @@
   },
   "best television series - comedy or musical": {
     "Nominees": [
-      "Girls"
+      "Girls",
+      "Cheers",
+      "Team Marnie",
+      "Demand",
+      "News"
     ],
     "Winner": [
       "Girls"
@@ -259,7 +308,10 @@
   },
   "best performance by an actor in a television series - drama": {
     "Nominees": [
-      "damien lewis"
+      "damian lewis",
+      "jeff daniels",
+      "hugh laurie",
+      "steve"
     ],
     "Winner": [
       "damien lewis"
@@ -268,7 +320,8 @@
   },
   "best performance by an actor in a television series - comedy or musical": {
     "Nominees": [
-      "don cheadle"
+      "don cheadle",
+      "eric stonestreet"
     ],
     "Winner": [
       "don cheadle"
