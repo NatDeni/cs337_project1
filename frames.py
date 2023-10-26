@@ -86,25 +86,28 @@ def get_hosts():
     
     return [p[0] for p in get_people(host_words)[:config.num_hosts]]
 
-def get_presenter():
-    answers_path = os.path.join(os.curdir, "data/gg2013answers.json")
+def get_presenter(): # check if certain percentage of words are in tweet?
+    answers_path = config.answer_path
     data = load_json()
-    data = [(d['text'], int(str(d['timestamp_ms'])[:-5])) for d in data]
+    data = [d['text'] for d in data]
     f = open(answers_path)
     answers = json.load(f)
+    presenter_pattern = re.compile('present|\sgave|\sgiving|\sgive|\sannounc|\sread|\sintroduc', re.IGNORECASE)
     info = []
     for award in answers['award_data']:
-        info.append((answers['award_data'][award]['winner'], award))
-    for winner, award in info:
-        pattern = re.compile(re.escape(winner), re.IGNORECASE)
-        time_data = [t[1] for t in data if re.search(pattern, t[0])]
-        winner_mode = statistics.mode(time_data)
-        pattern = re.compile('joke', re.IGNORECASE)
-        r_data = [t[0] for t in data if winner_mode - t[1] <5 and winner_mode - t[1] > 0 and re.search(pattern, t[0])]
+        info.append(([answers['award_data'][award]['winner']] + answers['award_data'][award]["nominees"], award))
+    for people, award in info:
+        filter = f'{people[0]}|\s'
+        for i in range(1, len(people)-1):
+            filter+= f'{people[i]}|\s'
+        filter+= people[-1]
+        filter = re.compile(filter, re.IGNORECASE)
+        r_data = [t for t in data if re.search(presenter_pattern, t) and (re.search(people[0],t) or re.search(award, t))]
         people = get_people(r_data)
+        print(r_data)
         print(people)
-        people = [p for p in people if not re.search(pattern,p[0])]
-        print(f'Winner: {winner}, Award: {award}, potential hosts: {[p[0] for p in people[:5]]}')
+        people = [p for p in people ]
+        print(f'Award: {award}, potential hosts: {[p[0] for p in people[:5]]}')
 
 
 if __name__ == "__main__":
