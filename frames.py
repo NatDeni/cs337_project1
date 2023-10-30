@@ -6,6 +6,7 @@ from ftfy import fix_text
 import re 
 from collections import Counter
 import statistics
+from award_categories_important_words import import_awards_from_answers, is_award_in_tweet, define_important_words
 
 
 def is_actor(name):
@@ -87,7 +88,7 @@ def get_hosts():
     return [p[0] for p in get_people(host_words)[:config.num_hosts]]
 
 def get_presenter(): # check if certain percentage of words are in tweet?
-    answers_path = config.answer_path
+    answers_path = config.answers
     data = load_json()
     data = [d['text'] for d in data]
     f = open(answers_path)
@@ -100,9 +101,11 @@ def get_presenter(): # check if certain percentage of words are in tweet?
         filter = f'{people[0]}|\s'
         for i in range(1, len(people)-1):
             filter+= f'{people[i]}|\s'
+        imp_words = define_important_words(award)
+        isPersonAward = is_actor(people[0])
         filter+= people[-1]
         filter = re.compile(filter, re.IGNORECASE)
-        r_data = [t for t in data if re.search(presenter_pattern, t) and (re.search(people[0],t) or re.search(award, t))]
+        r_data = [t for t in data if re.search(presenter_pattern, t) and (re.search(people[0],t) or is_award_in_tweet(t, imp_words, isPersonAward))]
         people = get_people(r_data)
         print(r_data)
         print(people)
