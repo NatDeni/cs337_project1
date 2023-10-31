@@ -8,6 +8,7 @@ from collections import Counter
 import statistics
 from award_categories_important_words import import_awards_from_answers, is_award_in_tweet, define_important_words
 
+spacy_model = spacy.load("en_core_web_sm")  
 
 def is_actor(name):
     query = {"primaryName": name}
@@ -43,20 +44,17 @@ class award():
         if could_win(winner):
             self.winner = winner
 
-def get_people(examples):
-    spacy_model = spacy.load("en_core_web_sm")   
+def get_people(examples): 
     names = []
-    for t in examples:
-        output = spacy_model(t)
-        
-        for entity in output.ents:
-            
-            if entity.label_ == "PERSON":
-                split = entity.text.split()
-                while(len(split) > 2):
-                    names.append(split[0] + " " + split[1])
-                    split = split[2:]
-                names.append(" ".join(split))
+    all_data = ' '.join(examples)
+    output = spacy_model(all_data)
+    for entity in output.ents:
+        if entity.label_ == "PERSON":
+            split = entity.text.split()
+            while(len(split) > 2):
+                names.append(split[0] + " " + split[1])
+                split = split[2:]
+            names.append(" ".join(split))
                 
     
     counter = Counter(names)
@@ -93,25 +91,38 @@ def get_presenter(): # check if certain percentage of words are in tweet?
     data = [d['text'] for d in data]
     f = open(answers_path)
     answers = json.load(f)
-    presenter_pattern = re.compile('present|\sgave|\sgiving|\sgive|\sannounc|\sread|\sintroduc', re.IGNORECASE)
+    # presenter_pattern = re.compile('present|\sgave|\sgiving|\sgive|\sannounc|\sread|\sintroduc', re.IGNORECASE)
+    presenter_pattern = re.compile('present|\sannounc|\sintroduc', re.IGNORECASE)
     info = []
+    presenters_answer = {}
     for award in answers['award_data']:
-        info.append(([answers['award_data'][award]['winner']] + answers['award_data'][award]["nominees"], award))
+        info.append(([answers['award_data'][award]['winner']] + \
+                     answers['award_data'][award]["nominees"], award))
+        presenters_answer[award] = answers['award_data'][award]['presenters'] # we use that just so that we could print it out and compare it manually with what our code returns
+    
+    got_presenters = {}
     for people, award in info:
-        filter = f'{people[0]}|\s'
-        for i in range(1, len(people)-1):
-            filter+= f'{people[i]}|\s'
-        imp_words = define_important_words(award)
-        isPersonAward = is_actor(people[0])
-        filter+= people[-1]
+        filter_text = '|\s'.join(people)
+        filter = f'{filter_text}'
         filter = re.compile(filter, re.IGNORECASE)
-        r_data = [t for t in data if re.search(presenter_pattern, t) and (re.search(people[0],t) or is_award_in_tweet(t, imp_words, isPersonAward))]
+        imp_words = define_important_words(award)
+        people_words = ['actor', 'actress', 'director']
+        # isPersonAward = is_actor(people[0])
+        isPersonAward = any([w in award.lower() for w in people_words])
+        # if not isPersonAward: continue
+        r_data = [t for t in data if re.search(presenter_pattern, t) and 
+                  (re.search(people[0].split(' ')[0].lower(), ' '+t.lower()) or # the pattern won't be able to detect if a word is in the beginning of the string cause it has no preceeding space
+                   re.search(people[0].split(' ')[-1].lower(), ' '+t.lower()) or 
+                   is_award_in_tweet(t, imp_words, isPersonAward))]
         people = get_people(r_data)
-        print(r_data)
-        print(people)
-        people = [p for p in people ]
-        print(f'Award: {award}, potential hosts: {[p[0] for p in people[:5]]}')
-
+        # print(r_data)
+        # print(people)
+        people = [p for p in people if not filter.search(' '+p[0])]
+        print('-' * 20)
+        print(presenters_answer[award])
+        got_presenters[award] = [p[0] for p in people[:5]]
+        print(f'Award: {award}, {isPersonAward}, potential hosts: {[p[0] for p in people[:5]]}')
+    return got_presenters
 
 if __name__ == "__main__":
     print(get_presenter())
