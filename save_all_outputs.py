@@ -6,7 +6,7 @@ from award_categories_important_words import import_awards_from_answers
 from award_categories_extraction import award_categories
 
 
-def save_to_json(hosts, answer_award_list, our_awards_list, 
+def create_json(hosts, answer_award_list, our_awards_list, 
                  nominees, winners, presenters):
     json_dict = {}
     json_dict['Hosts'] = hosts
@@ -15,19 +15,22 @@ def save_to_json(hosts, answer_award_list, our_awards_list,
         json_dict[award] = {'Nominees': nominees[award], 
                             'Winner': winners[award], 
                             'Presenters': presenters[award]}
+    return json_dict
+
+
+def save_to_json(hosts, answer_award_list, our_awards_list, 
+                 nominees, winners, presenters):
+    json_dict = create_json(hosts, answer_award_list, our_awards_list, 
+                 nominees, winners, presenters)
+    
     with open(config.json_output, 'w') as f:
         json.dump(json_dict, f)
 
 
 def save_to_readable(hosts, answer_award_list, our_awards_list, 
                  nominees, winners, presenters):
-    json_dict = {}
-    json_dict['Hosts'] = hosts
-    json_dict['Awards'] = our_awards_list
-    for award in answer_award_list:
-        json_dict[award] = {'Nominees': nominees[award], 
-                            'Winner': winners[award], 
-                            'Presenters': presenters[award]}
+    json_dict = create_json(hosts, answer_award_list, our_awards_list, 
+                 nominees, winners, presenters)
     with open(config.readable_output, 'w') as f:
         f.write('Hosts: '+ ', '.join(json_dict['Hosts']) + '\n\n')
         f.write('Our Awards: '+ '; '.join(json_dict['Awards']) + '\n\n')
@@ -60,19 +63,8 @@ def collect_data(year, verbose=False):
 
     save_to_json(hosts, answer_award_list, 
                  our_awards_list, nominees, winners, presenters)
-
-    with open(config.readable_output, 'w') as f:
-        f.write('Hosts: '+ ', '.join(json_dict['Hosts']) + '\n\n')
-        f.write('Our Awards: '+ '; '.join(json_dict['Awards']) + '\n\n')
-        for award in answer_award_list:
-            f.write('Award: '+ str(award)+ '\n')
-            if len(nominees[award]) < 1: f.write('Nominees: \n')
-            else: f.write('Nominees: '+ ', '.join(nominees[award])+ '\n')
-            if len(winners[award]) < 1: f.write('Winner: \n')
-            else: f.write('Winner: '+ winners[award][0]+ '\n')
-            f.write('Presenters: '+ ''+ '\n')
-            f.write('\n')
-        # json.dump(json_dict)
+    save_to_readable(hosts, answer_award_list, 
+                 our_awards_list, nominees, winners, presenters)
 
 if __name__ == '__main__':
     collect_data(2013, True)
