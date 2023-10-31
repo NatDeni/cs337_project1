@@ -11,7 +11,7 @@ class config:
     datapath = os.path.join(os.curdir, "data/gg2013.json")
     preproc_datapath = os.path.join(os.curdir, "data/gg2013_preprocessed_03.json")
     preproc_special_datapath = os.path.join(os.curdir, "data/gg2013_preprocessed_special.json")
-    award_datapath = os.path.join(os.curdir, "data/categories.json")
+    award_extraction = os.path.join(os.curdir, "data/gg2013_preprocessed_special_01.json")
     json_output = os.path.join(os.curdir, "data/our_output_json.json")
     readable_output = os.path.join(os.curdir, "data/our_output_readable.txt")
     actors = db.actors

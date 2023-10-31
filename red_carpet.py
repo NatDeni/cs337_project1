@@ -1,10 +1,7 @@
-import spacy
 import json
-from nltk import pos_tag
 from config import config
 import re
 from collections import Counter
-spacy_model = spacy.load("en_core_web_sm")
 
 def is_it_best_or_worst(is_best = True):
     with open (config.preproc_datapath) as f:
@@ -30,22 +27,17 @@ def is_it_best_or_worst(is_best = True):
                             has_stop_word = True 
                             break
                     if has_stop_word: continue
-                    # output = spacy_model(match_name)
-                    # has_human_name = False
-                    # for entity in output.ents:
-                    #     if entity.label_ == "PERSON":
-                    #         has_human_name = True
-                    #         break
-                    #     else:
-                    #         continue
-                    # if not has_human_name: 
                     entities.append(match_name)
                 break
 
     counter = Counter(entities)
-    print(counter.most_common(3))
-    # print(entities)
-    
+    top_3 = counter.most_common(3)
+
+    top_3_list = []
+    for c in top_3:
+        top_3_list.append(c[0])
+        
+    return top_3_list
 
 if __name__ == '__main__':
     is_it_best_or_worst(True)

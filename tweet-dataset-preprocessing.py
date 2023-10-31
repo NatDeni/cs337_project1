@@ -52,7 +52,8 @@ def specialawards_preprocessing(data):
     link_pattern = re.compile(r'http\S+')
     username_pattern = re.compile(r'@\w+\s?')
     rt_pattern = re.compile(r'RT\s')
-    punctuation_pattern = re.compile(r'[^\w\s#]')
+    # punctuation_pattern = re.compile(r'[^\w\s#]')
+    punctuation_pattern = re.compile(r'[^\w\s#-]')
     space_pattern = re.compile(r'\s+')
 
     data_preproc = []
@@ -76,7 +77,7 @@ def specialawards_preprocessing(data):
         data_preproc.append(record)
 
     # save the preprocessed data to a new JSON file
-    with open('./data/gg2013_preprocessed_special.json', 'w') as f:
+    with open('./data/gg2013_preprocessed_special_01.json', 'w') as f:
         json.dump(data_preproc, f)
 
 

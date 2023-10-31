@@ -4,42 +4,21 @@ import json
 import spacy
 from nltk import RegexpParser, pos_tag
 from config import config
-from collections import Counter, defaultdict
+from collections import Counter
 
 spacy_model = spacy.load("en_core_web_sm")  
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 
 def award_categories(): 
-    with open (config.preproc_datapath) as f:
+    with open (config.award_extraction) as f:
         data = json.load(f)
 
-    # patterns = """
-    #     <JJS><NN><NN>{2} | \
-    #     <JJS><JJ><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN><CC><JJ> | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>
-    # """
-
-    #     patterns = """
-    #     <JJS><NN><NN>{2} | <JJS><JJ><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN><CC><JJ> | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN>{2} | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NNS><CC><NN>{2}<VBN><IN><NN> | \
-    #     <JJS><NN>{2}<NN><CC><JJ> | <RBS><NNS><CC><NN>{2}<VBN><IN><NN> | \
-    #     <JJS><JJ><NN><NN>{2} | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN> | \
-    #     <NN>{2}<VBZ><NN> | \
-    #     <RBS><NN><IN><DT><NN><IN><DT><NNS><CC><NN>{2}<VBN><IN><NN> |  <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NN>
-    # """
-
-    # patterns = """
-    #     <JJS><NN><NN>{2} \
-
-       
-    # """
-
-    patterns = """ P: {<RBS><NN><IN><DT><NN><IN><DT><JJ><NN> \
-    | <JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS><NN>{2}<NN><CC><JJ> | <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1} | <JJS><JJ><NN>{2} | <JJS><NN><NN>{2} | <RBS><NNS><CC><NN>{2}<VBN><IN><NN> | <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN> | <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NNS><CC><NN>{2}<VBN><IN><NN>}"""
-
-    # chunk_pattern_list = [RegexpParser('P: {'+pattern.strip()+'}') for pattern in patterns.split('|')]
+    patterns = """ P: {<JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1} | <JJS><NN>{2}<:><NN><CC><JJ> | \
+    <JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1} | <RBS><NN><IN><DT><NN><IN><DT><JJ><NN> | \
+    <JJS><JJ><:><NN>{2} | <JJS><NN><:><NN>{2} | <RBS><NNS><CC><NN>{2}<VBN><IN><NN> | \
+    <RBS><NN><IN><DT><NN><IN><DT><NN>{2}<NN> | \
+    <RBS><NN><IN><DT><NN><IN><DT><JJ><NN><IN><DT><NN><NNS><CC><NN>{2}<VBN><IN><NN> | <JJS><JJ><NN>{2}}"""
     
     chunk_pattern_list = [RegexpParser(patterns)]
     categories = []
@@ -84,136 +63,48 @@ def award_categories():
                 continue
         if not has_human_name: 
             categories_no_people.append(categories[i])
+    
+    for i in range(len(categories_no_people)):
+        categories_no_people[i] = categories_no_people[i].replace('-', '')
+        if 'tv' in categories_no_people[i]:
+            categories_no_people[i] = categories_no_people[i].replace('tv', 'television series').replace('series series', 'series')
+        categories_no_people[i] = categories_no_people[i].replace('  ', ' ')
+
+    sw = ['win', 'award', 'red']
+    categories_no_people = [x for x in categories_no_people if sw[0] not in x]
+    categories_no_people = [x for x in categories_no_people if sw[1] not in x]
+    categories_no_people = [x for x in categories_no_people if sw[2] not in x]
+    categories_no_people = [x.replace('comedy or musical', 'comedy').replace('comedy musical', 'comedy').replace('musical', 'comedy')
+                             for x in categories_no_people]
+    
+    categories_no_people = [x.replace('for a', 'in a') for x in categories_no_people]
 
     cou = Counter(categories_no_people)
-    top26 = cou.most_common(26)
-    top30 = cou.most_common(30)
-    top50 = cou.most_common(50)
+    top40 = cou.most_common(40)
 
-    print(top30)
+    new_counter = {}
+    added = []
+    for i in range(len(top40)):
+        if i in added: continue
+        new_counter[top40[i][0]] = top40[i][1]
+        che_str_i = top40[i][0].replace('in a ', '')
+        words_i = che_str_i.split()
+        for j in range(i + 1, len(top40)):
+            if j in added: continue
+            che_str_j = top40[j][0].replace('in a ', '')
+            words_j = che_str_j.split()
+            if Counter(words_j) == Counter(words_i) or \
+                che_str_i in che_str_j or che_str_j in che_str_i or \
+                top40[i][0] in top40[j][0] or top40[j][0] in top40[i][0]:
+                new_counter[top40[i][0]] += top40[j][1]
+                added.append(j)
 
-    combinations = []
-    larger_categories = []
-    combinations_dict = defaultdict(list)
-
-    for category in top30:
-        if ' or ' in category[0]:
-            larger_categories.append(category[0])
-            combinations.append(category[0])
-            combinations_dict[category[0]] = category[0]
-        else:
-            continue
-
-    for i in range(len(larger_categories)):
-
-        print('-----------------------------------------------------------------------')
-
-        print(larger_categories[i])
-        first_part, second_part = larger_categories[i].split(' or')
-
-        first_part = first_part.strip()
-        second_part = second_part.strip()
-        first_part_list = list(first_part.split(" "))
-        length_first = len(first_part_list)
-
-        first_part_list_copy = first_part_list.copy()
-        first_part_list_copy[length_first - 1] = second_part
-        second_combination  = " ".join(first_part_list_copy) + ' or ' + first_part_list[length_first - 1]
-        combinations.append(second_combination)
-
-        if larger_categories[i] in combinations_dict.keys():
-            combinations_dict[larger_categories[i]] += ', ' + second_combination 
-
-    is_it_substring = False
-    no_substring = []
-    for category in top50:
-        for combination in combinations:
-            exists = combination.find(category[0])
-            if exists != -1 and category[0] != combination:
-                is_it_substring = True
-                
-                category = list(category)
-                category[0] = combination
-                top50.append(category)
-                top50.remove(category)
-                no_substring.append(tuple(category))
-                break
-            else:
-                is_it_substring = False
-                continue
-        if not is_it_substring:
-            no_substring.append(category)
-
-    print(no_substring)
-
-    for i, string in enumerate(no_substring):
-        if string[0] in combinations_dict.keys():
-            # print(string[0])
-            continue
-            
-        for key, value in combinations_dict.items():
-            exists = value.find(string[0])
-            if exists != -1:
-                lst_string = list(string)
-                lst_string[0] = key
-                no_substring[i] = tuple(lst_string)
-                # print(no_substring[i])
-                break
-    # print(no_substring)
-  
-    unique_strings = {}
-    for string, num in no_substring:
-        if string in unique_strings:
-            unique_strings[string] += num
-        else:
-            unique_strings[string] = num
-
-    no_substring = [(string, num) for string, num in unique_strings.items()]
-    # print(no_substring)
-
-# Group tuples by number of words in first part
-    groups = defaultdict(list)
-    for string, num in no_substring:
-        num_words = len(string.split())
-        groups[num_words].append((string, num))
-
-    # Remove duplicates within each group
-    for num_words, tuples in groups.items():
-        for i, (string1, num1) in enumerate(tuples):
-            for j in range(i+1, len(tuples)):
-                string2, num2 = tuples[j]
-                if set(string1.split()) <= set(string2.split()):
-                    tuples[i] = (string1, num1+num2)
-                    tuples.pop(j)
-                    break
-
-    # Flatten groups back into a list of tuples
-    no_substring = [(string, num) for tuples in groups.values() for string, num in tuples]
-
-    no_substring = sorted(no_substring, key=lambda x: x[1], reverse=True)
-
-    #if any of the top 50 elements in the first part contain the word 'tv' replace it with 'television'
-    for i in range(len(no_substring)):
-        if 'tv' in no_substring[i][0]:
-            no_substring[i] = (no_substring[i][0].replace('tv', 'television'), no_substring[i][1])
-
-    # in no_substring keep only those elements whose first part contains more than 4 words
-    # no_substring = [x for x in no_substring if len(x[0].split()) > 4]
-    # print(no_substring)
-
-    # with open('./data/categories.txt', 'w') as f:
-    #     for c in no_substring:
-    #         f.write(str(c[0]) + '\n')
-
-    # # with open('tmp4.txt', 'w') as f:
-    # #     for c in no_substring:
-    # #         f.write(str(c) + '\n')
-
-    # with open('./data/categories_check.json', 'w') as f:
-    #     json.dump({{c[0] for c in no_substring}}, f)
+    # with open('./data/award_categories.txt', 'w') as f:
+    #     for c in new_counter:
+    #         f.write(str(c) + '\n')
 
     only_categories = []
-    for c in no_substring:
+    for c in top40[0:26]:
         only_categories.append(c[0])
 
     return only_categories
@@ -232,18 +123,24 @@ def get_human_named_awards():
             hashtag = sentence['text'].split('#')[1].split(' ')[0]
 
         if hashtag.endswith('Award') and len(hashtag) > 6:
-            print(sentence['text'], '-----------', hashtag)
             award_sentences.append(sentence['text'])
             award_hashtags.append(hashtag)
 
     count = Counter(award_hashtags)
     top1 = count.most_common(1)
-    print(top1)
-
     award = re.sub(r'(?<!^)(?=[A-Z])', ' ', top1[0][0])
-    print(award)
+
+    final_list = []
+    final_list.append(award)
+
+    award_categories_list = award_categories()
+    for category in award_categories_list:
+        final_list.append(category)
+
+    return award_categories_list
 
 
 if __name__ == '__main__':
+    
     award_categories()
-    # get_human_named_awards()
+    get_human_named_awards()
