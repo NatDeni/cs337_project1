@@ -6,50 +6,71 @@ import json
 import re
 from frames import is_actor, is_movie
 import text2emotion
-def winner_sentiment():
+
+from config import config
+def winner_sentiment(load = False):
+    if(load):
+        with open(config.sentiment_path, "r") as json_file:
+            loaded_data = json.load(json_file)
+            return loaded_data
+        
     nltk.download('vader_lexicon')
     sia = SentimentIntensityAnalyzer()
-    answers_path = os.path.join(os.curdir, "data/gg2013answers.json")
+    answers_path = config.answers
     data = load_json()
     data = [d['text'] for d in data]
+    
     f = open(answers_path)
     answers = json.load(f)
-    hosts = answers['hosts']
     winners = {}
-    nominees = {}
     for award in answers['award_data']:
         winners[(answers['award_data'][award]['winner'])] = []
-        nominees[award] = answers['award_data'][award]['nominees']
-    
-    for winner in winners.keys:
-        winner_tweets = [d for d in data if(re.search(winner, d, re.IGNORECASE))]
-        emotions = get_emotions(winner_tweets)
+    winner_names = []
+    for winner in winners.keys():
+        winner_names.append(winner)
+    escaped_strings = [re.escape(s) for s in winner_names]
+    winner_filter = "|".join(escaped_strings)
+    print(len(data))
+    data = [d for d in data if re.search(winner_filter, d, re.IGNORECASE)]
+    print(len(data))
+    print('getting emotions')
+    emotions = get_emotions(data)
+    for winner in winners.keys():
+        filter = [bool(re.search(winner, d, re.IGNORECASE)) for d in data]
+        winner_tweets = [t for t, f in zip(data, filter) if f]
+        emotions = [e for e, f in zip(emotions, filter) if f]
+        
+        
+        winner_tweets = [d for d in data if re.search(winner, d, re.IGNORECASE)]
         best_emotion = calc_max_emotion(emotions)
         polarity = get_polarity(winner_tweets)
         winners[winner] = (polarity, best_emotion)
-    best_winner = max(winners, key = winners.get)
-    worst_winner = min(winners, key= winners.get)
+    file_path = config.sentiment_file
+    with open(file_path, "w") as json_file:
+        json.dump(winners, json_file)
     
-    return winners
 
 def avg_emotions(emotions, key):
     emotions = [t[key] for t in emotions]
     try: # protects against no tweets found
         avg1 = sum(emotions)/len(emotions)
+        return avg1
     except:
         return 0 
 def get_emotions(data):
-    emotions = [text2emotion.get_emotion(t) for t in data]
-    return [avg_emotions(emotions, i) for i in ['Happy', 'Angry', 'Surprise', 'Sad', 'Fear']]
+    return [text2emotion.get_emotion(t) for t in data]
+    
 
 def get_polarity(data):
     sia = SentimentIntensityAnalyzer()
     scores = [sia.polarity_scores(d)['compound'] for d in data]
     try:
         avg = sum(scores)/len(scores)
+        return avg
     except:
         return 0
 def calc_max_emotion(emotions):
+    emotions = [avg_emotions(emotions, i) for i in ['Happy', 'Angry', 'Surprise', 'Sad', 'Fear']]
     emotion_canidates = ['Happy', 'Angry', 'Surprise', 'Sad', 'Fear']
     return emotion_canidates[emotions.index(max(emotions))]
 if __name__ == "__main__":

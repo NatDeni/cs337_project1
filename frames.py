@@ -10,8 +10,14 @@ from award_categories_important_words import import_awards_from_answers, is_awar
 
 spacy_model = spacy.load("en_core_web_sm")  
 
-def is_actor(name):
-    query = {"primaryName": name}
+def is_actor(name, year):
+    query = {"$or": [
+                                { "deathYear": "\\N" },
+                                { "deathYear": { "$gte": str(int(year) - 1) } }
+                            ],
+                            "primaryName": name,
+                            
+                        }
     if config.actors.find_one(query) is not None:
         return True
     else:
@@ -28,23 +34,9 @@ def is_movie(name):
 def could_win(winner,award):
     return winner in award.nominees 
 
-class award():
-    def __init__(self, award) -> None:
-        self.award = award
-        self.nominees = []
-        self.winner = None
-    def addNominee(self, name):
-        if(len(self.nominees) > config.num_noms):
-            return
-        elif(not is_actor(name)):
-            return
-        else:
-            self.nominees.append(name)
-    def set_winner(self, winner):
-        if could_win(winner):
-            self.winner = winner
 
-def get_people(examples): 
+
+def get_people(examples,year): 
     names = []
     all_data = ' '.join(examples)
     output = spacy_model(all_data)
@@ -59,7 +51,7 @@ def get_people(examples):
     
     counter = Counter(names)
     top = counter.most_common(50)
-    two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0])] #Checks for first names that match a first/last name pair. Hopefully no duplicates!
+    two_name = [s for s in top if len(s[0].split()) ==2 and is_actor(s[0],year)] #Checks for first names that match a first/last name pair. Hopefully no duplicates!
     one_name = [s for s in top if len(s[0].split()) ==1]
     final_list = []
     for name2, count in two_name:
@@ -77,20 +69,21 @@ def load_json(): #Need to make more efficient, don't need to open every time
     f = open(tweet_json_path)
     return json.load(f)
 
-def get_hosts():
+def get_hosts(year):
     
     data = load_json()
     text = [d['text'] for d in data]
     host_words = [h for h in text if re.search("host(?:s|ing|ed)?",h, re.IGNORECASE)]
     
-    return [p[0] for p in get_people(host_words)[:config.num_hosts]]
+    return [p[0] for p in get_people(host_words, year)[:config.num_hosts]]
 
-def get_presenter(): # check if certain percentage of words are in tweet?
+def get_presenter(year): 
     answers_path = config.answers
     data = load_json()
     data = [d['text'] for d in data]
     f = open(answers_path)
     answers = json.load(f)
+    hosts = answers["hosts"]
     # presenter_pattern = re.compile('present|\sgave|\sgiving|\sgive|\sannounc|\sread|\sintroduc', re.IGNORECASE)
     presenter_pattern = re.compile('present|\sannounc|\sintroduc', re.IGNORECASE)
     info = []
@@ -102,28 +95,28 @@ def get_presenter(): # check if certain percentage of words are in tweet?
     
     got_presenters = {}
     for people, award in info:
-        filter_text = '|\s'.join(people)
+        filter_text = '|\s'.join(people + hosts)
         filter = f'{filter_text}'
         filter = re.compile(filter, re.IGNORECASE)
         imp_words = define_important_words(award)
         people_words = ['actor', 'actress', 'director']
-        # isPersonAward = is_actor(people[0])
+        
         isPersonAward = any([w in award.lower() for w in people_words])
         # if not isPersonAward: continue
         r_data = [t for t in data if re.search(presenter_pattern, t) and 
                   (re.search(people[0].split(' ')[0].lower(), ' '+t.lower()) or # the pattern won't be able to detect if a word is in the beginning of the string cause it has no preceeding space
                    re.search(people[0].split(' ')[-1].lower(), ' '+t.lower()) or 
                    is_award_in_tweet(t, imp_words, isPersonAward))]
-        people = get_people(r_data)
+        people = get_people(r_data, year)
         # print(r_data)
         # print(people)
         people = [p for p in people if not filter.search(' '+p[0])]
         print('-' * 20)
         print(presenters_answer[award])
         got_presenters[award] = [p[0] for p in people[:5]]
-        print(f'Award: {award}, {isPersonAward}, potential hosts: {[p[0] for p in people[:5]]}')
+        print(f'Award: {award}, {isPersonAward}, potential hosts: {[p for p in people[:5]]}')
     return got_presenters
 
 if __name__ == "__main__":
-    print(get_presenter())
+    print(get_presenter("2013"))
     

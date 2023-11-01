@@ -8,7 +8,7 @@ from save_all_outputs import save_to_json, save_to_readable
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
-    hosts = frames.get_hosts()
+    hosts = frames.get_hosts(year)
     return hosts
 
 def get_awards(year):
@@ -36,7 +36,7 @@ def get_presenters(year):
     '''Presenters is a dictionary with the hard coded award
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
-    presenters = frames.get_presenter()
+    presenters = frames.get_presenter(year)
     return presenters
 
 def pre_ceremony():

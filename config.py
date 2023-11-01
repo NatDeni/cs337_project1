@@ -14,5 +14,6 @@ class config:
     award_extraction = os.path.join(os.curdir, "data/gg2013_preprocessed_special_01.json")
     json_output = os.path.join(os.curdir, "data/our_output_json.json")
     readable_output = os.path.join(os.curdir, "data/our_output_readable.txt")
+    sentiment_file = os.path.join(os.curdir,"data/sentiment.json")
     actors = db.actors
     movies = db.movies
