@@ -8,34 +8,36 @@ from red_carpet import is_it_best_or_worst
 from sentiment import winner_sentiment
 
 def create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment):
+                 nominees, winners, presenters, best_dressed, worst_dressed, sentiment):
     json_dict = {}
     json_dict['Hosts'] = hosts
     json_dict['Awards'] = our_awards_list
     for award in answer_award_list:
         json_dict[award] = {'Nominees': nominees[award], 
                             'Winner': winners[award], 
-                            'Presenters': presenters[award],
-                            'Polarity' : winner_sentiment[winners[award]][0],
-                            'Sentiment': winner_sentiment[winners[award]][1]}
+                            'Presenters': presenters[award]
+                            }
     json_dict['Best dressed'] = best_dressed
-    json_dict['Worst dressed'] = worst_dressed
+    json_dict['Worst dressed'] =worst_dressed
+    for winner in sentiment.keys():
+        json_dict[winner] = {"Polarity": sentiment[winner][0],
+                             "Sentiment": sentiment[winner][1]}
     return json_dict
 
 
 def save_to_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment):
+                 nominees, winners, presenters, best_dressed, worst_dressed, sentiment):
     json_dict = create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment)
+                 nominees, winners, presenters, best_dressed, worst_dressed, sentiment)
     
     with open(config.json_output, 'w') as f:
         json.dump(json_dict, f)
 
 
 def save_to_readable(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed):
+                 nominees, winners, presenters, best_dressed, worst_dressed,sentiment):
     json_dict = create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed)
+                 nominees, winners, presenters, best_dressed, worst_dressed,sentiment)
     with open(config.readable_output, 'w') as f:
         f.write('Hosts: '+ ', '.join(json_dict['Hosts']) + '\n\n')
         f.write('Our Awards: '+ '; '.join(json_dict['Awards']) + '\n\n')
@@ -49,8 +51,8 @@ def save_to_readable(hosts, answer_award_list, our_awards_list,
             f.write('\n')
         f.write('Best Dressed: '+ ', '.join(json_dict['Best dressed'])+ '\n')
         f.write('Worst Dressed: '+ ', '.join(json_dict['Worst dressed'])+ '\n')
-        for winner in winner_sentiment.keys():
-            f.write(f'Winner: {winner}, Polarity: {winner_sentiment[winner][0]} Sentiment: {winner_sentiment[winner][1]}')
+        for winner in sentiment.keys():
+            f.write(f'Winner: {winner}, Polarity: {sentiment[winner][0]} Sentiment: {sentiment[winner][1]}\n')
 
 
 def collect_data(year, verbose=False):
@@ -72,11 +74,11 @@ def collect_data(year, verbose=False):
 
     best_dressed = is_it_best_or_worst(True)
     worst_dressed = is_it_best_or_worst(False)
-    winner_sentiment = winner_sentiment(str(year))
+    sentiment = winner_sentiment(str(year))
     save_to_json(hosts, answer_award_list, 
-                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed)
+                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed,sentiment)
     save_to_readable(hosts, answer_award_list, 
-                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed)
+                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed,sentiment)
 
 if __name__ == '__main__':
     collect_data(2013, True)
