@@ -1,7 +1,17 @@
 from pymongo import MongoClient
 import json
 
-#Insert JSON into MongoDB
+def create_db_and_collections(conn):
+    try:
+        db = conn['awards']
+        collection1 = db.create_collection('actors')
+        collection2 = db.create_collection('movies')
+
+        print("Successfully created database and collections.")
+        return db, collection1, collection2
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
 def insert_actors_into_db(filename, collection):
     with open(filename, 'r') as file:
@@ -21,11 +31,16 @@ def insert_movies_into_db(filename, collection):
 if __name__ == "__main__":
 
     conn = MongoClient('localhost', 27017)
-    db = conn.awards
-    collection1 = db.actors
-    collection2 = db.movies
 
-    insert_actors_into_db('./database_data/filtered_actors.json', collection1)
-    insert_movies_into_db('./database_data/filtered_movies.json', collection2)
+    db, collection1, collection2 = create_db_and_collections(conn)
+
+    if db is not None:
+        print("Inserting actor data into MongoDB.")
+        insert_actors_into_db('./database_data/filtered_actors.json', collection1)
+        
+        print("Inserting movie data into MongoDB.")
+        insert_movies_into_db('./database_data/filtered_movies.json', collection2)
+    else:
+        print("Database creation failed.")
 
     conn.close()
