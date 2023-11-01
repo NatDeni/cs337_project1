@@ -4,10 +4,11 @@ from frames import get_hosts, get_presenter
 from nominees_extraction_regex import get_entites
 from award_categories_important_words import import_awards_from_answers
 from award_categories_extraction import award_categories
+from red_carpet import is_it_best_or_worst
 
 
 def create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters):
+                 nominees, winners, presenters, best_dressed, worst_dressed):
     json_dict = {}
     json_dict['Hosts'] = hosts
     json_dict['Awards'] = our_awards_list
@@ -15,33 +16,37 @@ def create_json(hosts, answer_award_list, our_awards_list,
         json_dict[award] = {'Nominees': nominees[award], 
                             'Winner': winners[award], 
                             'Presenters': presenters[award]}
+    json_dict['Best dressed'] = best_dressed
+    json_dict['Worst dressed'] = worst_dressed
     return json_dict
 
 
 def save_to_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters):
+                 nominees, winners, presenters, best_dressed, worst_dressed):
     json_dict = create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters)
+                 nominees, winners, presenters, best_dressed, worst_dressed)
     
     with open(config.json_output, 'w') as f:
         json.dump(json_dict, f)
 
 
 def save_to_readable(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters):
+                 nominees, winners, presenters, best_dressed, worst_dressed):
     json_dict = create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters)
+                 nominees, winners, presenters, best_dressed, worst_dressed)
     with open(config.readable_output, 'w') as f:
         f.write('Hosts: '+ ', '.join(json_dict['Hosts']) + '\n\n')
         f.write('Our Awards: '+ '; '.join(json_dict['Awards']) + '\n\n')
         for award in answer_award_list:
             f.write('Award: '+ str(award)+ '\n')
             if len(nominees[award]) < 1: f.write('Nominees: \n')
-            else: f.write('Nominees: '+ ', '.join(nominees[award])+ '\n')
+            else: f.write('Nominees: '+ ', '.join(json_dict[award]['Nominees'])+ '\n')
             if len(winners[award]) < 1: f.write('Winner: \n')
-            else: f.write('Winner: '+ winners[award][0]+ '\n')
-            f.write('Presenters: '+ ''+ '\n')
+            else: f.write('Winner: '+ json_dict[award]['Winner']+ '\n')
+            f.write('Presenters: '+ ', '.join(json_dict[award]['Presenters'])+ '\n')
             f.write('\n')
+        f.write('Best Dressed: '+ ', '.join(json_dict['Best dressed'])+ '\n')
+        f.write('Worst Dressed: '+ ', '.join(json_dict['Worst dressed'])+ '\n')
 
 
 def collect_data(year, verbose=False):
@@ -61,10 +66,13 @@ def collect_data(year, verbose=False):
 
     presenters = get_presenter()
 
+    best_dressed = is_it_best_or_worst(True)
+    worst_dressed = is_it_best_or_worst(False)
+
     save_to_json(hosts, answer_award_list, 
-                 our_awards_list, nominees, winners, presenters)
+                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed)
     save_to_readable(hosts, answer_award_list, 
-                 our_awards_list, nominees, winners, presenters)
+                 our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed)
 
 if __name__ == '__main__':
     collect_data(2013, True)

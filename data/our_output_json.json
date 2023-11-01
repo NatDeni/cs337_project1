@@ -5,327 +5,345 @@
   ],
   "Awards": [
     "best motion picture drama",
-    "best motion picture musical or comedy",
+    "best motion picture comedy",
+    "best actor in a motion picture drama",
     "best television series drama",
     "best actress in a motion picture drama",
     "best actress motion picture",
-    "best actor in a motion picture drama",
-    "best original song motion picture",
-    "best motion picture screenplay",
     "best actress in a television series drama",
     "best actor in a motion picture comedy",
     "best television series comedy",
+    "best original song motion picture",
     "best actress in a motion picture comedy",
+    "best actor in a television series comedy",
     "best director motion picture",
     "best actor television series",
-    "best actor in a television series comedy",
+    "best motion picture screenplay",
+    "best screenplay motion picture",
+    "best actor motion picture",
     "best foreign language film",
-    "best actress drama winner",
-    "best actress television drama",
-    "best actress in a television series comedy",
-    "best television series drama",
+    "best animated feature film",
     "best actress television series",
-    "best animated feature film award",
     "best actor in a television series drama",
-    "best original song skyfall",
-    "best original score motion picture",
-    "best actor television comedy",
-    "best drama television actress",
-    "best television series musical",
-    "best actor drama award",
-    "best actor in a television series comedy",
-    "best actress in a television series drama",
-    "best mini series or television",
-    "best original screenplay quentin",
-    "best television series comedy",
-    "best real fraud president",
-    "best actress in a television comedy musical",
     "best actress television series drama",
-    "best performance by an actress in a motion picture drama",
-    "best television drama actor",
-    "best actor in a television drama award",
-    "best actor for a television series drama",
-    "best red carpet look contest",
-    "best performance by an actor in a supporting role",
-    "best miniseries or motion picture made for television"
+    "best actress in a television series comedy",
+    "best original song skyfall",
+    "best actor television series comedy",
+    "best television series drama actress"
   ],
   "best screenplay - motion picture": {
-    "Nominees": [
-      "Django",
-      "Fuck Yeah"
-    ],
-    "Winner": [
-      "Django"
-    ],
-    "Presenters": []
+    "Nominees": [],
+    "Winner": "django",
+    "Presenters": [
+      "Robert Pattinson",
+      "Amanda Seyfried"
+    ]
   },
   "best director - motion picture": {
     "Nominees": [
-      "ben affleck",
       "ang lee",
-      "brenda chapman",
+      "driving miss daisy will argo",
       "matt damon",
+      "moonrise kingdom",
       "quentin tarantino"
     ],
-    "Winner": [
-      "ben affleck"
-    ],
-    "Presenters": []
+    "Winner": "ben affleck",
+    "Presenters": [
+      "Jennifer Lopez",
+      "Jennifer Garner"
+    ]
   },
   "best performance by an actress in a television series - comedy or musical": {
     "Nominees": [
-      "lena dunham",
-      "amy poehler"
+      "amy poehler",
+      "george clooney"
     ],
-    "Winner": [
-      "lena dunham"
-    ],
-    "Presenters": []
+    "Winner": "lena dunham",
+    "Presenters": [
+      "Bill Clinton"
+    ]
   },
   "best foreign language film": {
     "Nominees": [
-      "Amour",
-      "Schwarzenegger",
-      "Stallone",
-      "Michael Heneke",
-      "Oscar"
+      "schwarzenegger",
+      "stallone",
+      "michaelheneke",
+      "spikedpunch"
     ],
-    "Winner": [
-      "Amour"
-    ],
-    "Presenters": []
+    "Winner": "amour",
+    "Presenters": [
+      "Arnold Schwarzenegger",
+      "Sylvester Stallone"
+    ]
   },
   "best performance by an actor in a supporting role in a motion picture": {
     "Nominees": [
-      "christoph waltz",
-      "bradley cooper"
+      "django unchained",
+      "bradley cooper",
+      "esperando",
+      "estreno",
+      "kate hudson"
     ],
-    "Winner": [
-      "christoph waltz"
-    ],
-    "Presenters": []
+    "Winner": "christoph waltz",
+    "Presenters": [
+      "Kate Hudson",
+      "Bradley Cooper"
+    ]
   },
   "best performance by an actress in a supporting role in a series, mini-series or motion picture made for television": {
     "Nominees": [
       "maggie smith"
     ],
-    "Winner": [
-      "maggie smith"
-    ],
-    "Presenters": []
+    "Winner": "maggie smith",
+    "Presenters": [
+      "Meryl Streep",
+      "Anna Nicole"
+    ]
   },
   "best motion picture - comedy or musical": {
     "Nominees": [
-      "Les Mis",
-      "Hearts Fullof Love",
-      "Anne Hathaway",
-      "Cheers",
-      "Well Deserved"
+      "heartsfulloflove",
+      "welldeserved",
+      "annehathaway",
+      "cheers",
+      "others"
     ],
-    "Winner": [
-      "Les Mis"
-    ],
-    "Presenters": []
+    "Winner": "lesmis",
+    "Presenters": [
+      "Mitt Romney",
+      "Bill Clinton"
+    ]
   },
   "best performance by an actress in a motion picture - comedy or musical": {
     "Nominees": [
-      "jennifer lawrence"
+      "linings playbook",
+      "bert",
+      "leana dunham girls",
+      "tommy lee jones"
     ],
-    "Winner": [
-      "jennifer lawrence"
-    ],
-    "Presenters": []
+    "Winner": "jennifer lawrence",
+    "Presenters": [
+      "Jennifer Lopez",
+      "Jason Statham"
+    ]
   },
   "best mini-series or motion picture made for television": {
     "Nominees": [],
-    "Winner": [],
-    "Presenters": []
+    "Winner": "",
+    "Presenters": [
+      "Bill Clinton"
+    ]
   },
   "best original score - motion picture": {
     "Nominees": [
-      "Getthe Look",
-      "Lifeof Pi",
-      "Life Of Pie",
-      "Michael Dane",
-      "Mychael Danna"
+      "getthelook",
+      "mychaeldanna",
+      "michaeldane"
     ],
-    "Winner": [
-      "Life Of Pie"
-    ],
-    "Presenters": []
+    "Winner": "lifeofpie",
+    "Presenters": [
+      "Bill Clinton",
+      "Steven Spielberg"
+    ]
   },
   "best performance by an actress in a television series - drama": {
     "Nominees": [
-      "claire danes",
+      "bert",
+      "glenn",
       "abbey",
-      "lea michele"
+      "carrie mathison congrats homeland",
+      "dowager countess"
     ],
-    "Winner": [
-      "claire danes"
-    ],
-    "Presenters": []
+    "Winner": "claire danes",
+    "Presenters": [
+      "Lea Michele",
+      "Claire Dane"
+    ]
   },
   "best performance by an actress in a motion picture - drama": {
     "Nominees": [
-      "jessica chastain",
-      "anne hathaway"
+      "anne hathaway",
+      "george clooney"
     ],
-    "Winner": [
-      "jessica chastain"
-    ],
-    "Presenters": []
+    "Winner": "jessica chastain",
+    "Presenters": [
+      "Jessica Alba",
+      "George Clooney"
+    ]
   },
   "cecil b. demille award": {
     "Nominees": [
-      "Cecil",
-      "Jodie Foster",
-      "De Mille",
-      "Came Out",
-      "Cecile"
+      "demille",
+      "jodiefoster",
+      "lifetime",
+      "privacy",
+      "speech"
     ],
-    "Winner": [
-      "Cecil"
-    ],
-    "Presenters": []
+    "Winner": "cecil",
+    "Presenters": [
+      "Tina Fey",
+      "Amy Poehler"
+    ]
   },
   "best performance by an actor in a motion picture - comedy or musical": {
     "Nominees": [
+      "sweet",
       "ada",
-      "sweet"
+      "hugh surprised"
     ],
-    "Winner": [
-      "sweet"
-    ],
+    "Winner": "sweet",
     "Presenters": []
   },
   "best motion picture - drama": {
     "Nominees": [
-      "Argo",
-      "Lincoln",
-      "Julia Roberts",
-      "Oscars",
-      "Amazing"
+      "lincoln",
+      "juliaroberts",
+      "benaffleck",
+      "georgeclooney",
+      "amazing"
     ],
-    "Winner": [
-      "Argo"
-    ],
-    "Presenters": []
+    "Winner": "argo",
+    "Presenters": [
+      "Bill Clinton",
+      "Julia Roberts"
+    ]
   },
   "best performance by an actor in a supporting role in a series, mini-series or motion picture made for television": {
     "Nominees": [],
-    "Winner": [],
-    "Presenters": []
+    "Winner": "",
+    "Presenters": [
+      "Bill Clinton",
+      "Robert Pattinson"
+    ]
   },
   "best performance by an actress in a supporting role in a motion picture": {
     "Nominees": [
-      "anne hathaway",
+      "les miz",
+      "downton abbey",
+      "hooray",
       "maggie smith"
     ],
-    "Winner": [
-      "anne hathaway"
-    ],
-    "Presenters": []
+    "Winner": "anne hathaway",
+    "Presenters": [
+      "Julianne Moore",
+      "Tom Ford"
+    ]
   },
   "best television series - drama": {
     "Nominees": [
-      "Homeland",
-      "Belarich",
-      "Claire",
-      "Diego Klattenhoff",
-      "Fuck Yeah"
+      "belarich",
+      "claire",
+      "diegoklattenhoff",
+      "littleunexpected",
+      "hamm"
     ],
-    "Winner": [
-      "Homeland"
-    ],
-    "Presenters": []
+    "Winner": "homeland",
+    "Presenters": [
+      "Paul Rudd",
+      "Salma Hayek"
+    ]
   },
   "best performance by an actor in a mini-series or motion picture made for television": {
     "Nominees": [
-      "kevin"
+      "hatfields mc"
     ],
-    "Winner": [
-      "kevin"
-    ],
-    "Presenters": []
+    "Winner": "kevin",
+    "Presenters": [
+      "Bill Clinton"
+    ]
   },
   "best performance by an actress in a mini-series or motion picture made for television": {
     "Nominees": [
-      "julianne moore",
+      "downton abbey",
       "maggie smith",
       "nicole kidman"
     ],
-    "Winner": [
-      "julianne moore"
-    ],
-    "Presenters": []
+    "Winner": "julianne moore",
+    "Presenters": [
+      "Tom Ford"
+    ]
   },
   "best animated feature film": {
     "Nominees": [
-      "Brave",
-      "Disney",
-      "Wreck It Ralph",
-      "Pixar"
+      "disney",
+      "wreckitralph",
+      "pixar"
     ],
-    "Winner": [
-      "Brave"
-    ],
-    "Presenters": []
+    "Winner": "brave",
+    "Presenters": [
+      "Mark Andrews",
+      "Lena Dunham"
+    ]
   },
   "best original song - motion picture": {
     "Nominees": [
-      "Skyfall",
-      "Adele",
-      "Actof Valors",
-      "Bond James Bond",
-      "Django"
+      "adele",
+      "bondjamesbond",
+      "actofvalors",
+      "django"
     ],
-    "Winner": [
-      "Skyfall"
-    ],
+    "Winner": "skyfall",
     "Presenters": []
   },
   "best performance by an actor in a motion picture - drama": {
     "Nominees": [
-      "daniel day"
+      "lewis lincoln",
+      "bri"
     ],
-    "Winner": [
-      "daniel day"
-    ],
-    "Presenters": []
+    "Winner": "daniel day",
+    "Presenters": [
+      "Daniel Day",
+      "Lewis George"
+    ]
   },
   "best television series - comedy or musical": {
     "Nominees": [
-      "Girls",
-      "Cheers",
-      "Team Marnie",
-      "Demand",
-      "News"
+      "cheers",
+      "demand",
+      "news",
+      "teammarnie",
+      "teamsquatch"
     ],
-    "Winner": [
-      "Girls"
-    ],
-    "Presenters": []
+    "Winner": "girls",
+    "Presenters": [
+      "Jay Leno",
+      "Claire Danes"
+    ]
   },
   "best performance by an actor in a television series - drama": {
     "Nominees": [
-      "damian lewis",
       "jeff daniels",
-      "hugh laurie",
-      "steve"
+      "backtoback homeland",
+      "steve",
+      "cranston",
+      "hugh laurie"
     ],
-    "Winner": [
-      "damien lewis"
-    ],
-    "Presenters": []
+    "Winner": "damian lewis",
+    "Presenters": [
+      "Daniel Day",
+      "Lewis George"
+    ]
   },
   "best performance by an actor in a television series - comedy or musical": {
     "Nominees": [
-      "don cheadle",
+      "lena dunham",
+      "lies jim parsons",
       "eric stonestreet"
     ],
-    "Winner": [
-      "don cheadle"
-    ],
-    "Presenters": []
-  }
+    "Winner": "don cheadle",
+    "Presenters": [
+      "Jodie Foster",
+      "Bill Clinton"
+    ]
+  },
+  "Best dressed": [
+    "Kate Hudson",
+    "Anne Hathaway",
+    "Jessica Alba"
+  ],
+  "Worst dressed": [
+    "Halle Berry",
+    "Sienna Miller",
+    "Jessica Chastain"
+  ]
 }
