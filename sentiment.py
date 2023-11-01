@@ -37,14 +37,13 @@ def winner_sentiment(load = False):
         # filter = [bool(re.search(winner, d, re.IGNORECASE)) for d in data]
         # winner_tweets = [t for t, f in zip(data, filter) if f]
         # emotions = [e for e, f in zip(emotions, filter) if f]
-        print(winner)
         
         winner_tweets = random.sample([d for d in data if re.search(winner, d, re.IGNORECASE)], min(50,len([d for d in data if re.search(winner, d, re.IGNORECASE)])))
         emotion =get_emotions(winner_tweets)
         best_emotion = calc_max_emotion(emotion)
         polarity = get_polarity(winner_tweets)
         winners[winner] = (polarity, best_emotion)
-        print(winners[winner])
+       
     # file_path = config.sentiment_file
     # with open(file_path, "w") as json_file:
     #     json.dump(winners, json_file)
