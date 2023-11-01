@@ -5,6 +5,7 @@ from award_categories_important_words import import_awards_from_answers
 from nominees_extraction_regex import get_entites
 from save_all_outputs import save_to_json, save_to_readable
 from red_carpet import is_it_best_or_worst
+from sentiment import winner_sentiment
 
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
@@ -65,11 +66,12 @@ def main():
 
     best_dressed = is_it_best_or_worst(True)
     worst_dressed = is_it_best_or_worst(False)
+    winner_sentiment = winner_sentiment(str(year))
 
     save_to_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed) # save data to file announced in config.json_output
+                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment) # save data to file announced in config.json_output
     save_to_readable(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed) # save data to file announced in config.readable_output
+                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment) # save data to file announced in config.readable_output
 
     return
 

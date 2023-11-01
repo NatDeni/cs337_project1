@@ -5,26 +5,28 @@ from nominees_extraction_regex import get_entites
 from award_categories_important_words import import_awards_from_answers
 from award_categories_extraction import award_categories
 from red_carpet import is_it_best_or_worst
-
+from sentiment import winner_sentiment
 
 def create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed):
+                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment):
     json_dict = {}
     json_dict['Hosts'] = hosts
     json_dict['Awards'] = our_awards_list
     for award in answer_award_list:
         json_dict[award] = {'Nominees': nominees[award], 
                             'Winner': winners[award], 
-                            'Presenters': presenters[award]}
+                            'Presenters': presenters[award],
+                            'Polarity' : winner_sentiment[winners[award]][0],
+                            'Sentiment': winner_sentiment[winners[award]][1]}
     json_dict['Best dressed'] = best_dressed
     json_dict['Worst dressed'] = worst_dressed
     return json_dict
 
 
 def save_to_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed):
+                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment):
     json_dict = create_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed)
+                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment)
     
     with open(config.json_output, 'w') as f:
         json.dump(json_dict, f)
@@ -47,10 +49,12 @@ def save_to_readable(hosts, answer_award_list, our_awards_list,
             f.write('\n')
         f.write('Best Dressed: '+ ', '.join(json_dict['Best dressed'])+ '\n')
         f.write('Worst Dressed: '+ ', '.join(json_dict['Worst dressed'])+ '\n')
+        for winner in winner_sentiment.keys():
+            f.write(f'Winner: {winner}, Polarity: {winner_sentiment[winner][0]} Sentiment: {winner_sentiment[winner][1]}')
 
 
 def collect_data(year, verbose=False):
-    hosts = get_hosts()
+    hosts = get_hosts(str(year))
     if verbose: print("Got hosts")
     our_awards_list = award_categories()
     # our_awards_list = []
@@ -64,11 +68,11 @@ def collect_data(year, verbose=False):
     winners = get_entites(answer_award_list, year, verbose=False, category='WINNERS')
     if verbose: print("Got winners")
 
-    presenters = get_presenter()
+    presenters = get_presenter(str(year))
 
     best_dressed = is_it_best_or_worst(True)
     worst_dressed = is_it_best_or_worst(False)
-
+    winner_sentiment = winner_sentiment(str(year))
     save_to_json(hosts, answer_award_list, 
                  our_awards_list, nominees, winners, presenters, best_dressed, worst_dressed)
     save_to_readable(hosts, answer_award_list, 
