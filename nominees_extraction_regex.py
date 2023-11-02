@@ -255,17 +255,17 @@ def get_entites(awards_list, year, verbose=True, category='NOMINEES'):
                 category_nominees = sorted([[tmp[0], tmp[1]['count']] 
                                         for tmp in nominees_winners[t]['COMBINED'].items()],
                                         key= lambda a: (-a[1],a[0]))[:5]
+            # nominees[t] = sorted(nominees[t].items(),key= lambda a: (-a[1],a[0]))
+            if category == 'NOMINEES':
+                nominees_winners[t] = category_nominees
+            if category == 'WINNERS':
+                nominees_winners[t] = category_winner
+            nominees_winners[t] = [n[0] for n in nominees_winners[t]]
 
         else:
-            category_winner = [[]]
-            category_nominees = [[]]
+            nominees_winners[t] = []
+            # category_nominees = [[]]
 
-        # nominees[t] = sorted(nominees[t].items(),key= lambda a: (-a[1],a[0]))
-        if category == 'NOMINEES':
-            nominees_winners[t] = category_nominees
-        if category == 'WINNERS':
-            nominees_winners[t] = category_winner
-        nominees_winners[t] = [n[0] for n in nominees_winners[t]]
         if verbose:
             if person_award[t]:continue
             print('\n', t, '\n', nominees_winners[t], '\n')
