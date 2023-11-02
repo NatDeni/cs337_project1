@@ -23,7 +23,7 @@ def initial_preprocessing(data):
     data_preproc = []
 
     # preprocess the text field of each record
-    for record in tqdm(data):
+    for record in tqdm(data, position=0, leave=True):
         text = record['text']
         if not isEnglish(text): continue
         text = ftfy.fix_text(text)
@@ -59,7 +59,7 @@ def specialawards_preprocessing_keep_dashes(data):
     data_preproc = []
 
     # preprocess the text field of each record
-    for record in tqdm(data):
+    for record in tqdm(data, position=0, leave=True):
         text = record['text']
         if not isEnglish(text): continue
         text = ftfy.fix_text(text)
@@ -93,7 +93,7 @@ def specialawards_preprocessing_remove_dashes(data):
     data_preproc = []
 
     # preprocess the text field of each record
-    for record in tqdm(data):
+    for record in tqdm(data, position=0, leave=True):
         text = record['text']
         if not isEnglish(text): continue
         text = ftfy.fix_text(text)
