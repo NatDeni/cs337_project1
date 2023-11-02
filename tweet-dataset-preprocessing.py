@@ -120,6 +120,10 @@ if __name__ == "__main__":
     with open('./data/gg2013.json') as f:
         data = json.load(f)
     initial_preprocessing(data)
+    with open('./data/gg2013.json') as f:
+        data = json.load(f)
     specialawards_preprocessing_keep_dashes(data)
+    with open('./data/gg2013.json') as f:
+        data = json.load(f)
     specialawards_preprocessing_remove_dashes(data)
     
