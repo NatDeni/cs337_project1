@@ -1,3 +1,6 @@
+## Github project link
+https://github.com/NatDeni/cs337_project1
+
 ## Preprocessing steps
 Prior to working with the Golden Globes data, we utilize IMDb datasets of movies and actors, which due to their large size cannot be commited to Github, therefore please download it here: https://drive.google.com/file/d/1r88BrMWtXOrIFSX-1bfiJPdjDrbhgcQH/view?usp=sharing and add the files to the dataset_data folder of the project. The data in these files has already been pre-processed by the modify_movies_data(), modify_actors_data() and assign_genders() functions located in data-manipulation.py, removing redundant information (from the original actors and movies files of IMDB found here https://datasets.imdbws.com/ respectively name.basics.tsv.gz and title.akas.tsv.gz which were converted to csv and named actors and movies.csv) on actors that died before 2005 or movies that ended production before 2000.
 
