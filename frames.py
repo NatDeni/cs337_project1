@@ -111,10 +111,10 @@ def get_presenter(year):
         # print(r_data)
         # print(people)
         people = [p for p in people if not filter.search(' '+p[0])]
-        print('-' * 20)
-        print(presenters_answer[award])
+        # print('-' * 20)
+        # print(presenters_answer[award])
         got_presenters[award] = [p[0] for p in people[:5]]
-        print(f'Award: {award}, {isPersonAward}, potential hosts: {[p for p in people[:5]]}')
+        # print(f'Award: {award}, {isPersonAward}, potential hosts: {[p for p in people[:5]]}')
     return got_presenters
 
 if __name__ == "__main__":
