@@ -66,12 +66,12 @@ def main():
 
     best_dressed = is_it_best_or_worst(True)
     worst_dressed = is_it_best_or_worst(False)
-    winner_sentiment = winner_sentiment(str(year))
+    sentiment = winner_sentiment(str(year))
 
     save_to_json(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment) # save data to file announced in config.json_output
+                 nominees, winners, presenters, best_dressed, worst_dressed, sentiment) # save data to file announced in config.json_output
     save_to_readable(hosts, answer_award_list, our_awards_list, 
-                 nominees, winners, presenters, best_dressed, worst_dressed, winner_sentiment) # save data to file announced in config.readable_output
+                 nominees, winners, presenters, best_dressed, worst_dressed, sentiment) # save data to file announced in config.readable_output
 
     return
 

@@ -243,12 +243,16 @@ def get_entites(awards_list, year, verbose=True, category='NOMINEES'):
                     new_count[h] = combine_all[h]
                 nominees_winners[t]['COMBINED'] = new_count
         
-        category_winner = sorted([[tmp[0], tmp[1]['count']] 
-                                  for tmp in nominees_winners[t]['COMBINED'].items() if 'w' in tmp[1]['category']],
-                                  key= lambda a: (-a[1],a[0]))[:1]
-        category_nominees = sorted([[tmp[0], tmp[1]['count']] 
-                                  for tmp in nominees_winners[t]['COMBINED'].items() if tmp[0].lower() != category_winner[0][0].lower()],
-                                  key= lambda a: (-a[1],a[0]))[:5]
+        if len(nominees_winners[t]['COMBINED'].items()) > 0:
+            category_winner = sorted([[tmp[0], tmp[1]['count']] 
+                                    for tmp in nominees_winners[t]['COMBINED'].items() if 'w' in tmp[1]['category']],
+                                    key= lambda a: (-a[1],a[0]))[:1]
+            category_nominees = sorted([[tmp[0], tmp[1]['count']] 
+                                    for tmp in nominees_winners[t]['COMBINED'].items() if tmp[0].lower() != category_winner[0][0].lower()],
+                                    key= lambda a: (-a[1],a[0]))[:5]
+        else:
+            category_winner = [[]]
+            category_nominees = []
 
         # nominees[t] = sorted(nominees[t].items(),key= lambda a: (-a[1],a[0]))
         if category == 'NOMINEES':
